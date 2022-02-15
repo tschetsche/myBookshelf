@@ -1,9 +1,7 @@
-// import cardReducer from './bookListReducer';
-// import { combineReducers } from 'redux';
-// import undoable, { excludeAction } from 'redux-undo';
+import bookReducer from './bookListReducer';
+import bookshelfReducer from './bookShelfReducer';
+import { combineReducers } from 'redux';
 
-// const cardListReducer = combineReducers({
-//   cardListState: undoable(cardReducer, { limit: 10, undoType: 'DOCUMENT_UNDO', redoType: 'DOCUMENT_REDO' }),
-// });
+const rootReducer = combineReducers({ bookReducer, bookshelfReducer });
 
-// export default cardListReducer;
+export default rootReducer;

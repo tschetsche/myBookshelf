@@ -35,7 +35,13 @@ const StyledMainLayout = styled.div`
 
   .content {
     width: 100%;
-    height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px);
+  }
+
+  .content::after {
+    content: '';
+    display: block;
+    height: 50px;
   }
 `;
 

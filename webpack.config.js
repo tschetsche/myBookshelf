@@ -9,6 +9,7 @@ module.exports = {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'build'),
     clean: true,
+    publicPath: '/',
   },
   devtool: 'source-map',
   devServer: {

@@ -6,7 +6,7 @@ const StyledCard = styled.div`
   width: 200px;
   height: 200px;
   background-color: ${(props) => props.theme.cardBackgroundColor};
-  margin: 20px;
+  margin: 40px;
   color: ${(props) => props.theme.baseFontColor};
   border-radius: 2px;
   display: flex;
@@ -14,16 +14,29 @@ const StyledCard = styled.div`
   align-items: center;
   justify-content: space-between;
   font-family: 'montserrat';
+
+  .title {
+    margin: 10px 0px;
+  }
+
+  .bookCard {
+    text-decoration: none;
+    color: ${(props) => props.theme.baseFontColor};
+  }
+  .cover {
+    display: block;
+    text-align: center;
+  }
 `;
 
 const Card = (props) => {
   return (
     <StyledCard>
-      <Link to={`/book/${props.cardID}`}>
+      <Link to={`/book/${props.cardID}`} className={'bookCard'}>
         <div className={'cover'}>
-          <img src={props.bookCover} alt={props.bookTitle} />
+          <img src={props.cover} alt={props.title} />
         </div>
-        <div className={'title'}>{props.bookTitle}</div>
+        <div className={'title'}>{props.title}</div>
       </Link>
     </StyledCard>
   );

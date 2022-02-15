@@ -12,7 +12,6 @@ const StyledHeader = styled.div`
   box-shadow: 0 4px 20px rgb(38 38 38 / 10%);
   font-family: 'montserrat';
   padding: 16px 0px;
-  font-family: 'montserrat';
   color: ${(props) => props.theme.baseFontColor};
   background-color: ${(props) => props.theme.navbarBackgroundColor};
 
