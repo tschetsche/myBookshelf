@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
-import AddToBookShelfModal from '../../Components/AddToBookShelfModal/AddToBookShelfModal';
+import fakeApi from '../../api/fakeApi';
+import AddToBookshelfModal from '../../Components/Modal/AddToBookshelfModal/AddToBookshelfModal';
+import { ModalContext } from 'HOC/GlobalModalProvider';
 
 const StyledBook = styled.div`
   width: 65vw;
@@ -69,17 +70,18 @@ const StyledBook = styled.div`
 
 const Book = (props) => {
   const [book, setBook] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const params = useParams();
 
+  const openModal = useContext(ModalContext);
+
   useEffect(() => {
-    axios.get(`http://localhost:3003/book/${params.bookID}`).then((response) => {
+    fakeApi.get(`/book/${params.bookID}`).then((response) => {
       setBook(response.data);
     });
   }, []);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    openModal(<AddToBookshelfModal setIsOpen={openModal} title={book.title} />);
   };
 
   return (
@@ -92,7 +94,6 @@ const Book = (props) => {
           <div className={'bookshelf-add'} onClick={toggleModal}>
             <span>Add to Bookshelf</span>
           </div>
-          {isModalOpen && <AddToBookShelfModal setIsOpen={setIsModalOpen} title={book.title} />}
           <div className={'readers'}></div>
           <div className={'reviews'}></div>
         </div>

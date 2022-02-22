@@ -1,1 +1,1 @@
-export const bookListSelector = (store) => store.bookReducer.bookList;
+export const bookListSelector = (store) => store.bookList.bookList;

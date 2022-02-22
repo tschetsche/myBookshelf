@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "server": "json-server jsonServer/db.json -m ./node_modules/json-server-auth --port 3003"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +19,6 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-styled-components": "^2.0.2",
     "css-loader": "^6.6.0",
-    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "immer": "^9.0.12",
     "react": "^17.0.2",
@@ -28,10 +28,16 @@
     "react-refresh": "^0.11.0",
     "react-router-dom": "^6.2.1",
     "redux": "^4.1.2",
+    "redux-persist": "^6.0.0",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.3",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "json-server": "^0.17.0",
+    "json-server-auth": "^2.1.0"
   }
 }

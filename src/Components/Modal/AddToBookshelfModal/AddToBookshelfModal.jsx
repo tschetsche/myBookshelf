@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import Dropdown from '../Dropdown/Dropdown';
-import { addBookToShelf } from '../../store/actions/bookShelf';
+import Dropdown from '../../Dropdown/Dropdown';
+import { bookListSelector } from '../../../store/selectors/bookshelf';
+import { addBookToShelf } from '../../../store/actions/bookshelf';
 import { useSelector } from 'react-redux';
 
-const StyledAddToBookShelfModal = styled.div`
+const StyledAddToBookshelfModal = styled.div`
   position: fixed;
   background: grey;
   width: 500px;
@@ -14,24 +15,25 @@ const StyledAddToBookShelfModal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  .modal-header {
+
+  .modal_header {
     width: 30px;
   }
-  .modal-content {
+  .modal_content {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: calc(500px - 60px);
   }
-  .modal-controls {
+  .modal_controls {
     display: flex;
     flex-direction: row;
     width: 30px;
   }
 `;
 
-const AddToBookShelfModal = (props) => {
-  const bookshelfList = useSelector((store) => store.bookshelfReducer.bookshelfList);
+const AddToBookshelfModal = ({ title, setIsOpen }) => {
+  const bookshelfList = useSelector(bookListSelector);
   const [selectedBookshelf, setSelectedBookshelf] = useState(bookshelfList[0]);
   const dispatch = useDispatch();
 
@@ -47,32 +49,32 @@ const AddToBookShelfModal = (props) => {
   };
 
   const addToBookshelf = (bookshelf) => {
-    dispatch(addBookToShelf({ bookshelf, book: props.title }));
-    props.setIsOpen(false);
+    dispatch(addBookToShelf({ bookshelf, book: title }));
+    setIsOpen(false);
   };
 
   return (
-    <StyledAddToBookShelfModal>
+    <StyledAddToBookshelfModal>
       <div className={'modal'}>
-        <div className={'header'}>
-          <div className={'title'}>{props.title}</div>
+        <div className={'modal_header'}>
+          <div className={'modal_title'}>{title}</div>
         </div>
-        <div className={'content'}>
+        <div className={'modal_content'}>
           <div className={'heading'}> Add to Bookshelf</div>
-          <div className={'shelf-select'}>
-            <Dropdown id={'bookShelf-select'} label={'Select bookshelf'} options={getBookShelfDropdownOptions()} onChange={handleChange} />
+          <div className={'shelf_select'}>
+            <Dropdown id={'bookShelf_select'} label={'Select bookshelf'} options={getBookShelfDropdownOptions()} onChange={handleChange} />
           </div>
           <div className={'rating'}>
             <div className={'heading'}></div>
-            <div className={'rating-bar'}></div>
+            <div className={'rating_bar'}></div>
           </div>
         </div>
-        <div className={'footer'}>
-          <div className={'modal-controls'}>
+        <div className={'modal_footer'}>
+          <div className={'modal_controls'}>
             <button
               className={'cancel'}
               onClick={() => {
-                props.setIsOpen(false);
+                setIsOpen(false);
               }}
             >
               close
@@ -88,8 +90,8 @@ const AddToBookShelfModal = (props) => {
           </div>
         </div>
       </div>
-    </StyledAddToBookShelfModal>
+    </StyledAddToBookshelfModal>
   );
 };
 
-export default AddToBookShelfModal;
+export default AddToBookshelfModal;

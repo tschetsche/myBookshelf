@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import Card from 'Components/Card/Card';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { bookListSelector } from 'store/selectors/bookList';
-import { useDispatch } from 'react-redux';
 import { replaceBookList } from 'store/actions/bookList';
-import { addBookshelfToList, addBookshelf } from '../../store/actions/bookShelf';
-import axios from 'axios';
+import fakeApi from '../../api/fakeApi';
 
 const StyledBookList = styled.div`
   display: flex;
@@ -31,15 +29,8 @@ const BookList = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('http://localhost:3003/books').then((response) => {
+    fakeApi.get('/books').then((response) => {
       dispatch(replaceBookList(response.data));
-    });
-  }, []);
-
-  useEffect(() => {
-    axios.get('http://localhost:3003/bookshelves').then((response) => {
-      dispatch(addBookshelfToList(response.data));
-      dispatch(addBookshelf(response.data));
     });
   }, []);
 

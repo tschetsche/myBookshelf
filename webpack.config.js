@@ -41,6 +41,10 @@ module.exports = {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: ['file-loader'],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: ['file-loader'],
+      },
     ],
   },
   plugins: [new HtmlWebpackPlugin({ template: './public/index.html', filename: './index.html' }), new ReactRefreshWebpackPlugin()],
