@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Navbar from './Navbar';
-import ThemeSwitchToggle from 'Components/ThemeSwitchToggle/ThemeSwitchToggle';
-import { ModalContext } from '../../HOC/GlobalModalProvider';
-import { AiOutlineUser, AiOutlineSearch } from 'react-icons/ai';
-import LoginModal from '../../Components/Modal/LoginModal/LoginModal';
+import SiteNavbar from './SiteNavbar';
+import { Link } from 'react-router-dom';
+import UserNavbar from './UserNavbar';
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -14,44 +12,26 @@ const StyledHeader = styled.div`
   align-items: center;
   box-shadow: 0 4px 20px rgb(38 38 38 / 10%);
   font-family: 'montserrat';
-  padding: 16px 0px;
   color: ${(props) => props.theme.baseFontColor};
   background-color: ${(props) => props.theme.navbarBackgroundColor};
 
-  .header_brand {
+  .logo {
     font-weight: 900;
     color: ${(props) => props.theme.baseFontColor};
     white-space: nowrap;
     font-size: 17.5px;
-  }
-
-  .header_login {
-    background: none;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    font-size: 18px;
+    text-decoration: none;
   }
 `;
 
 const Header = (props) => {
-  const openModal = useContext(ModalContext);
-
-  const handleLoginModalOpen = () => {
-    openModal(<LoginModal onClose={openModal} />);
-  };
-
   return (
     <StyledHeader>
-      <div className={'header_brand'}>My Bookshelf</div>
-      <Navbar />
-      <button className={'header_login'} onClick={handleLoginModalOpen}>
-        <AiOutlineUser />
-      </button>
-      <ThemeSwitchToggle />
+      <Link className={'logo'} to={'/'}>
+        My Bookshelf
+      </Link>
+      <SiteNavbar />
+      <UserNavbar />
     </StyledHeader>
   );
 };

@@ -11,6 +11,12 @@ const StyledHome = styled.div`
     background-size: cover;
     height: 436px;
   }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
 `;
 
 const Home = (props) => {
@@ -25,7 +31,11 @@ const Home = (props) => {
   return (
     <StyledHome>
       <h3>Home</h3>
-      <div className={'block'}></div>
+      <div className={'block'}>
+        <div className={'wrapper'}>
+          <h3>A home for your books</h3>
+        </div>
+      </div>
     </StyledHome>
   );
 };

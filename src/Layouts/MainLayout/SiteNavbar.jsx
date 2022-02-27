@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const StyledHeader = styled.div`
+const StyledSiteNavbar = styled.nav`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 0;
 
-  .navbar-item {
+  .site_navbar_item {
     padding: 0px 16px;
     margin: 7px 0px;
     color: #3c484f;
@@ -17,15 +18,15 @@ const StyledHeader = styled.div`
   }
 `;
 
-const Navbar = (props) => {
+const SiteNavbar = (props) => {
   return (
-    <StyledHeader>
-      <Link to={'/books'} className={'navbar-item'}>
+    <StyledSiteNavbar>
+      <Link to={'/books'} className={'site_navbar_item'}>
         Books
       </Link>
-      <div className={'navbar-item'}>Authors</div>
-    </StyledHeader>
+      <div className={'site_navbar_item'}>Authors</div>
+    </StyledSiteNavbar>
   );
 };
 
-export default Navbar;
+export default SiteNavbar;

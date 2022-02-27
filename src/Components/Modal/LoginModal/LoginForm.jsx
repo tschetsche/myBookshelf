@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { Formik, Form } from 'formik';
+import FormikInput from '../../Formik/FormikInput';
 
 const StyledLoginForm = styled.div`
   display: flex;
@@ -58,32 +60,6 @@ const StyledLoginForm = styled.div`
     font-size: 20px;
   }
 
-  .input_block {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    transition: 0.3s;
-
-    input {
-      outline: 0;
-      border: 0;
-      padding: 4px 0 0;
-      font-size: 14px;
-      background-color: ${(props) => props.theme.toggleElementColor};
-
-      &::placeholder {
-        color: #ddd;
-        opacity: 1;
-      }
-    }
-
-    &:focus-within {
-      border-color: ${(props) => props.theme.toggleElementColor};
-    }
-  }
   .register_block {
     margin-top: 16px;
     font-size: 14px;
@@ -100,27 +76,59 @@ const StyledLoginForm = styled.div`
   }
 `;
 
-const LoginForm = ({ email, handleEmailChange, password, handlePasswordChange, onSubmit, handleModeState, onClose }) => {
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+const LoginForm = ({ email, handleEmailChange, password, handlePasswordChange, handleSubmit, handleModeState, onClose }) => {
   return (
     <StyledLoginForm>
       <div className={'modal_left'}>
-        <h5 className={'modal_title'}>Sign in</h5>
-        <h6 className={'modal_desc'}>Welcome Back!</h6>
-        <div className={'input_block'}>
-          <input name='text' id='email' placeholder='Email' required='' type='email' value={email} onChange={handleEmailChange}></input>
-        </div>
-        <div className={'input_block'}>
-          <input name='text' id='password' placeholder='Password' required='' type={password} onChange={handlePasswordChange}></input>
-        </div>
-        <button className={'login_btn'} onClick={onSubmit}>
-          Login
-        </button>
-        <div className={'register_block'}>
-          Don't have an account?
-          <button className={'register_btn'} onClick={handleModeState}>
-            Sign up now
-          </button>
-        </div>
+        <Formik
+          initialValues={{ email: email, password: password }}
+          onSubmit={handleSubmit}
+          validate={(formValues) => {
+            console.log(formValues);
+            const errorObj = {};
+            let isValid = true;
+            if (!validateEmail(email)) {
+              isValid = false;
+              errorObj.email = 'Email is not valid';
+            }
+            if (password.length < 6) {
+              isValid = false;
+              errorObj.password = 'Password should be at least 6 characters';
+            }
+            if (!isValid) return errorObj;
+          }}
+        >
+          <Form>
+            <h5 className={'modal_title'}>Sign in</h5>
+            <h6 className={'modal_desc'}>Welcome Back!</h6>
+            <FormikInput name='email' type='email' placeholder='Email' id='email' value={email} onChange={handleEmailChange}></FormikInput>
+            <FormikInput
+              name='password'
+              type='password'
+              placeholder='Password'
+              id='password'
+              value={password}
+              onChange={handlePasswordChange}
+            ></FormikInput>
+            <button type='submit' className={'login_btn'}>
+              Login
+            </button>
+            <div className={'register_block'}>
+              Don't have an account?
+              <button className={'register_btn'} onClick={handleModeState}>
+                Sign up now
+              </button>
+            </div>
+          </Form>
+        </Formik>
       </div>
       <div className={'modal_right'}>
         <img

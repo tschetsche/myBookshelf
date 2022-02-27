@@ -57,7 +57,7 @@ const LoginModal = ({ onClose }) => {
           handleEmailChange={handleEmailChange}
           password={password}
           handlePasswordChange={handlePasswordChange}
-          onSubmit={handleLogin}
+          handleSubmit={handleLogin}
           handleModeState={toggleModeState}
           onClose={onClose}
         />
