@@ -16,16 +16,16 @@ const StyledThemeSwitchToggle = styled.div`
   }
 
   .toggle-wrapper {
-    width: 65px;
+    width: 50px;
     display: block;
   }
 
   .toggle {
-    height: 32.5px;
-    width: 65px;
+    height: 24px;
+    width: 50px;
     background: ${(props) => props.theme.toggleBackgroundColor};
-    border-radius: 20px;
-    padding: 6px;
+    border-radius: 15px;
+    padding: 4px;
     position: relative;
     margin: auto;
     cursor: pointer;
@@ -34,9 +34,9 @@ const StyledThemeSwitchToggle = styled.div`
   .toggle::before {
     content: '';
     display: block;
-    height: 20.5px;
-    width: 20.5px;
-    border-radius: 15px;
+    height: 16px;
+    width: 16px;
+    border-radius: 12px;
     background: ${(props) => props.theme.toggleElementColor};
     position: absolute;
     z-index: 2;
@@ -45,7 +45,7 @@ const StyledThemeSwitchToggle = styled.div`
   }
 
   .toggle.enabled::before {
-    transform: translateX(32.5px);
+    transform: translateX(25px);
   }
 
   .toggle input {
@@ -59,13 +59,13 @@ const StyledThemeSwitchToggle = styled.div`
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    margin: 0 5px;
+    margin: 0 4px;
   }
 
   .toggle .icons svg {
     fill: ${(props) => props.theme.toggleElementColor};
-    height: 15px;
-    width: 15px;
+    height: 12px;
+    width: 12px;
     z-index: 0;
   }
 `;

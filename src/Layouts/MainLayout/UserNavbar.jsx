@@ -17,7 +17,6 @@ const StyledUserNavbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  padding: 8px 0;
 
   .user_navbar_item {
     padding: 20px 8px;
@@ -33,7 +32,7 @@ const StyledUserNavbar = styled.nav`
     font: inherit;
     cursor: pointer;
     outline: inherit;
-    font-size: 32px;
+    font-size: 24px;
   }
 
   .login_icon {
@@ -45,8 +44,8 @@ const StyledUserNavbar = styled.nav`
   }
 
   .user_img {
-    height: 32px;
-    width: 32px;
+    height: 24px;
+    width: 24px;
     border-radius: 50%;
     vertical-align: middle;
   }

@@ -13,7 +13,9 @@ const StyledFormikInput = styled.div`
     display: flex;
     flex-direction: column;
     padding: 10px 10px 8px;
-    border: 1px solid #ddd;
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${(props) => (props.error && props.touched ? '#d93025' : '#ddd')};
     border-radius: 4px;
     transition: 0.3s;
     margin-bottom: 4px;
@@ -49,7 +51,7 @@ const FormikInput = (props) => {
   const [field, meta, helpers] = useField(props.name);
 
   return (
-    <StyledFormikInput>
+    <StyledFormikInput error={meta.error} touched={meta.touched}>
       <div className={'input_block'}>
         <input {...field} {...props} />
       </div>

@@ -4,6 +4,7 @@ import BookList from 'Scenes/BookList/BookList';
 import Book from 'Scenes/Book/Book';
 import Home from 'Scenes/Home/Home';
 import Profile from 'Scenes/Profile/Profile';
+import Library from '../Scenes/Library/Library';
 
 const RootRouter = () => {
   return (
@@ -12,6 +13,7 @@ const RootRouter = () => {
       <Route path={'/book/:bookID'} element={<Book />} />
       <Route path={'/'} element={<Home />} />
       <Route path={'/profile'} element={<Profile />} />
+      <Route path={'/lib'} element={<Library />} />
     </Routes>
   );
 };

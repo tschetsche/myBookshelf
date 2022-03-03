@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { Formik, Form } from 'formik';
-import FormikInput from '../../Formik/FormikInput';
+import login from '../../../assets/images/login.jpg';
 
 const StyledLoginForm = styled.div`
   display: flex;
@@ -19,31 +18,10 @@ const StyledLoginForm = styled.div`
 
     img {
       width: 100%;
-      height: 100%;
+      height: 30em;
       transform: scale(1);
+      object-fit: fill;
     }
-  }
-
-  .login_btn {
-    padding: 8px 12px;
-    outline: none;
-    border: 0;
-    color: #fff;
-    border-radius: 2px;
-    background: #106972;
-    cursor: pointer;
-    &:hover {
-      background: ${(props) => props.theme.accentFontColor};
-    }
-  }
-
-  .modal_title {
-    font-size: 26px;
-    font-weight: 700;
-  }
-
-  .modal_desc {
-    font-size: 18px;
   }
 
   .close_btn {
@@ -59,11 +37,20 @@ const StyledLoginForm = styled.div`
     cursor: pointer;
     font-size: 20px;
   }
+  .modal_title {
+    font-size: 26px;
+    font-weight: 700;
+  }
 
-  .register_block {
+  .modal_desc {
+    font-size: 18px;
+  }
+
+  .register_block,
+  .login_block {
     margin-top: 16px;
     font-size: 14px;
-    .register_btn {
+    button {
       background: none;
       border: none;
       padding: 0 8px;
@@ -74,67 +61,27 @@ const StyledLoginForm = styled.div`
       font-family: 'montserrat';
     }
   }
+
+  .submit_btn {
+    padding: 8px 12px;
+    outline: none;
+    border: 0;
+    color: #fff;
+    border-radius: 2px;
+    background: #106972;
+    cursor: pointer;
+    &:hover {
+      background: ${(props) => props.theme.accentFontColor};
+    }
+  }
 `;
 
-const validateEmail = (email) => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-};
-
-const LoginForm = ({ email, handleEmailChange, password, handlePasswordChange, handleSubmit, handleModeState, onClose }) => {
+const LoginForm = ({ children, onClose }) => {
   return (
     <StyledLoginForm>
-      <div className={'modal_left'}>
-        <Formik
-          initialValues={{ email: email, password: password }}
-          onSubmit={handleSubmit}
-          validate={(formValues) => {
-            console.log(formValues);
-            const errorObj = {};
-            let isValid = true;
-            if (!validateEmail(email)) {
-              isValid = false;
-              errorObj.email = 'Email is not valid';
-            }
-            if (password.length < 6) {
-              isValid = false;
-              errorObj.password = 'Password should be at least 6 characters';
-            }
-            if (!isValid) return errorObj;
-          }}
-        >
-          <Form>
-            <h5 className={'modal_title'}>Sign in</h5>
-            <h6 className={'modal_desc'}>Welcome Back!</h6>
-            <FormikInput name='email' type='email' placeholder='Email' id='email' value={email} onChange={handleEmailChange}></FormikInput>
-            <FormikInput
-              name='password'
-              type='password'
-              placeholder='Password'
-              id='password'
-              value={password}
-              onChange={handlePasswordChange}
-            ></FormikInput>
-            <button type='submit' className={'login_btn'}>
-              Login
-            </button>
-            <div className={'register_block'}>
-              Don't have an account?
-              <button className={'register_btn'} onClick={handleModeState}>
-                Sign up now
-              </button>
-            </div>
-          </Form>
-        </Formik>
-      </div>
+      <div className={'modal_left'}>{children}</div>
       <div className={'modal_right'}>
-        <img
-          src='https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=dfd2ec5a01006fd8c4d7592a381d3776&auto=format&fit=crop&w=1000&q=80'
-          alt=''
-        ></img>
+        <img src={login} alt=''></img>
       </div>
       <button
         className={'close_btn'}

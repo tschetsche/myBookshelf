@@ -25,6 +25,9 @@ const SiteNavbar = (props) => {
         Books
       </Link>
       <div className={'site_navbar_item'}>Authors</div>
+      <Link to={'lib'} className={'site_navbar_item'}>
+        My books
+      </Link>
     </StyledSiteNavbar>
   );
 };
