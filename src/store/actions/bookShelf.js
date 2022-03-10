@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const addBookshelvesToList = createAction('addBookshelvesToList');
+export const initBookshelfList = createAction('initBookshelfList');
 export const addBookshelfToList = createAction('addBookshelfToList');
 export const addBookToShelf = createAction('addBookToShelf');

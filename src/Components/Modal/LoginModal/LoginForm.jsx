@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 import login from '../../../assets/images/login.jpg';
+import CloseButton from '../CloseButton/CloseButton';
 
 const StyledLoginForm = styled.div`
   display: flex;
@@ -24,19 +24,6 @@ const StyledLoginForm = styled.div`
     }
   }
 
-  .close_btn {
-    outline: 0;
-    position: absolute;
-    right: 10px;
-    top: 12px;
-    width: 32px;
-    height: 32px;
-    border: 0;
-    background: 0;
-    padding: 0;
-    cursor: pointer;
-    font-size: 20px;
-  }
   .modal_title {
     font-size: 26px;
     font-weight: 700;
@@ -61,19 +48,6 @@ const StyledLoginForm = styled.div`
       font-family: 'montserrat';
     }
   }
-
-  .submit_btn {
-    padding: 8px 12px;
-    outline: none;
-    border: 0;
-    color: #fff;
-    border-radius: 2px;
-    background: #106972;
-    cursor: pointer;
-    &:hover {
-      background: ${(props) => props.theme.accentFontColor};
-    }
-  }
 `;
 
 const LoginForm = ({ children, onClose }) => {
@@ -83,14 +57,7 @@ const LoginForm = ({ children, onClose }) => {
       <div className={'modal_right'}>
         <img src={login} alt=''></img>
       </div>
-      <button
-        className={'close_btn'}
-        onClick={() => {
-          onClose(false);
-        }}
-      >
-        <AiOutlineCloseCircle />
-      </button>
+      <CloseButton onClose={onClose} />
     </StyledLoginForm>
   );
 };

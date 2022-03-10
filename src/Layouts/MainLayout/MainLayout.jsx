@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import RootRouter from '../../Route/RootRouter';
+import 'react-toastify/dist/ReactToastify.css';
+import Toast from '../../Components/Toast/Toast';
 
 const StyledMainLayout = styled.div`
   background-color: ${(props) => props.theme.baseBackgroundColor};
@@ -52,6 +54,7 @@ const MainLayout = (props) => {
         <Header />
         <div className={'content'}>
           <RootRouter />
+          <Toast />
         </div>
         <div className={'footer'}>
           <div className={'footerText'}>Footer</div>

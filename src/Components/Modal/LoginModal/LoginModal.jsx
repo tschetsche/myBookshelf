@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import fakeApi from '../../../api/fakeApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLoggedIn } from '../../../store/actions/user';
 import LoginForm from './LoginForm';
 import { Formik, Form } from 'formik';
 import FormikInput from '../../Formik/FormikInput';
+import ColoredButton from '../../ColoredButton/ColoredButton';
+import { toast } from 'react-toastify';
+import { bookshelfSelector } from '../../../store/selectors/bookshelf';
 
 const StyledLoginModal = styled.div`
   position: fixed;
@@ -24,19 +27,46 @@ const LoginModal = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
+  const errorMessage = useSelector((store) => store.globalAppState.APIError);
+  const bookshelfList = useSelector(bookshelfSelector);
 
   const handleLogin = ({ email, password }) => {
-    fakeApi.post('/login', { email, password }).then((response) => {
-      dispatch(userLoggedIn({ userName: email, userRoles: ['regularUser'], isLoggedIn: response.data.accessToken }));
-      onClose(false);
-    });
+    fakeApi
+      .post('/login', { email, password })
+      .then((response) => {
+        dispatch(
+          userLoggedIn({
+            userName: email,
+            userRoles: ['regularUser'],
+            isLoggedIn: response.data.accessToken,
+            bookshelves: response.data.user.bookshelves,
+          })
+        );
+        onClose(false);
+      })
+      .catch(() => {
+        toast.error(errorMessage);
+      });
   };
 
   const handleRegister = ({ email, password }) => {
-    fakeApi.post('/register', { email, password }).then((response) => {
-      dispatch(userLoggedIn({ userName: email, userRoles: ['regularUser'], isLoggedIn: response.data.accessToken }));
-      onClose(false);
-    });
+    const bookshelves = bookshelfList.map((el) => ({ ...el, books: [] }));
+    fakeApi
+      .post('/register', { email, password, bookshelves })
+      .then((response) => {
+        dispatch(
+          userLoggedIn({
+            userName: email,
+            userRoles: ['regularUser'],
+            isLoggedIn: response.data.accessToken,
+            bookshelves: response.data.user.bookshelves,
+          })
+        );
+        onClose(false);
+      })
+      .catch(() => {
+        toast.error(errorMessage);
+      });
   };
 
   const toggleModeState = () => {
@@ -82,9 +112,7 @@ const LoginModal = ({ onClose }) => {
                 <h6 className={'modal_desc'}>Welcome Back!</h6>
                 <FormikInput name='email' type='email' placeholder='Email' id='email'></FormikInput>
                 <FormikInput name='password' type='password' placeholder='Password' id='password'></FormikInput>
-                <button type='submit' className={'submit_btn'}>
-                  Login
-                </button>
+                <ColoredButton type={'submit'} className={'submit_btn'} title={'Login'}></ColoredButton>
                 <div className={'register_block'}>
                   Don't have an account?
                   <button
@@ -119,9 +147,7 @@ const LoginModal = ({ onClose }) => {
                 <h6 className={'modal_desc'}>Join us</h6>
                 <FormikInput name='email' type='email' placeholder='Email' id='email'></FormikInput>
                 <FormikInput name='password' type='password' placeholder='Password' id='password'></FormikInput>
-                <button type='submit' className={'submit_btn'}>
-                  Sign up
-                </button>
+                <ColoredButton type={'submit'} className={'submit_btn'} title={'Sign up'}></ColoredButton>
                 <div className={'login_block'}>
                   Already have an account?
                   <button

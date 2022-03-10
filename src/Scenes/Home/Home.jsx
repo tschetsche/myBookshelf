@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import fakeApi from '../../api/fakeApi';
 import img from '../../assets/images/books.jpg';
-import { addBookshelvesToList } from '../../store/actions/bookshelf';
+import { initBookshelfList } from '../../store/actions/bookshelf';
 
 const StyledHome = styled.div`
   .block {
@@ -24,7 +24,7 @@ const Home = (props) => {
 
   useEffect(() => {
     fakeApi.get('/bookshelves').then((response) => {
-      dispatch(addBookshelvesToList(response.data));
+      dispatch(initBookshelfList(response.data));
     });
   }, []);
 

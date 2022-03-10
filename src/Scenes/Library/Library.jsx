@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { bookListSelector } from '../../store/selectors/bookshelf';
+import { bookshelfSelector } from '../../store/selectors/bookshelf';
 import styled from 'styled-components';
 
 const StyledLibrary = styled.div`
@@ -43,7 +43,7 @@ const StyledLibrary = styled.div`
 `;
 
 const Library = (props) => {
-  const bookshelfList = useSelector(bookListSelector);
+  const bookshelfList = useSelector(bookshelfSelector);
   const [selectedBookshelf, setSelectedBookshel] = useState(bookshelfList[0]);
 
   return (

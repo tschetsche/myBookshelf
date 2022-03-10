@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import fakeApi from '../../api/fakeApi';
 import AddToBookshelfModal from '../../Components/Modal/AddToBookshelfModal/AddToBookshelfModal';
 import { ModalContext } from 'HOC/GlobalModalProvider';
+import Rating from '../../Components/Rating/Rating';
+import ColoredButton from '../../Components/ColoredButton/ColoredButton';
 
 const StyledBook = styled.div`
   width: 65vw;
@@ -54,18 +56,6 @@ const StyledBook = styled.div`
     position: relative;
     top: 2px;
   }
-
-  .bookshelf-add {
-    background-color: ${(props) => props.theme.accentFontColor};
-    cursor: pointer;
-    border-radius: 2px;
-    height: 38px;
-    text-align: center;
-    line-height: 38px;
-  }
-  .bookshelf-add span {
-    color: #fff;
-  }
 `;
 
 const Book = (props) => {
@@ -81,7 +71,7 @@ const Book = (props) => {
   }, []);
 
   const toggleModal = () => {
-    openModal(<AddToBookshelfModal setIsOpen={openModal} title={book.title} />);
+    openModal(<AddToBookshelfModal setIsOpen={openModal} title={book.title} bookId={params.bookID} />);
   };
 
   return (
@@ -91,9 +81,7 @@ const Book = (props) => {
           <div className={'cover'}>
             <img src={book.cover} alt={book.title}></img>
           </div>
-          <div className={'bookshelf-add'} onClick={toggleModal}>
-            <span>Add to Bookshelf</span>
-          </div>
+          <ColoredButton className={'booshelf_add'} type={'button'} onClick={toggleModal} title={'Add to Bookshelf'} />
           <div className={'readers'}></div>
           <div className={'reviews'}></div>
         </div>
@@ -132,6 +120,7 @@ const Book = (props) => {
             <div className={'rating detail-row'}>
               <label>Rating:</label>
               <span>{book.rating}</span>
+              <Rating name={'rating'} />
             </div>
             <div className={'description'}>
               <h3>Description</h3>

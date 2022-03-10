@@ -2,14 +2,40 @@
   "users": [
     {
       "email": "test@email.com",
-      "password": "$2a$10$jxSZwXImhhJQ9o8wltKYp.GeDsht7LMsrbc/gYk7uF/1PQJHBv8Tm",
+      "password": "$2a$10$fHChZQS6grBNDpbHipDm4OVAR15f.TXgprbcPIIwuu8zyuP5Iq2OK",
+      "bookshelves": [
+        {
+          "name": "Want to read",
+          "id": 1,
+          "books": []
+        },
+        {
+          "name": "Reading now",
+          "id": 2,
+          "books": []
+        },
+        {
+          "name": "Read",
+          "id": 3,
+          "books": []
+        }
+      ],
       "id": 1
     }
   ],
   "bookshelves": [
-    "Want to read",
-    "Reading now",
-    "Read"
+    {
+      "name": "Want to read",
+      "id": 1
+    },
+    {
+      "name": "Reading now",
+      "id": 2
+    },
+    {
+      "name": "Read",
+      "id": 3
+    }
   ],
   "books": [
     {
@@ -49,9 +75,7 @@
       "description": "<b><b>By the <i>New York Times </i>bestselling author of <i>The Bone Clocks</i> and <i>Cloud Atlas </i>| Longlisted for the Man Booker Prize</b><br><br> <b>Selected by <i>Time </i>as One of the Ten Best Books of the Year<i> </i>| A <i>New York Times</i> Notable Book | Named One of the Best Books of the Year by <i>The Washington Post Book World, The Christian Science Monitor, Rocky Mountain News, </i>and<i> Kirkus Reviews </i>| A <i>Los Angeles Times</i> Book Prize Finalist | Winner of the ALA Alex Award | Finalist for the Costa Novel Award</b><br></b><br>From award-winning writer David Mitchell comes a sinewy, meditative novel of boyhood on the cusp of adulthood and the old on the cusp of the new.<br><br><i>Black Swan Green</i> tracks a single year in what is, for thirteen-year-old Jason Taylor, the sleepiest village in muddiest Worcestershire in a dying Cold War England, 1982. But the thirteen chapters, each a short story in its own right, create an exquisitely observed world that is anything but sleepy. A world of Kissingeresque realpolitik<i> </i>enacted in boys’ games on a frozen lake; of “nightcreeping” through the summer backyards of strangers; of the tabloid-fueled thrills of the Falklands War and its human toll; of the cruel, luscious Dawn Madden and her power-hungry boyfriend, Ross Wilcox; of a certain Madame Eva van Outryve de Crommelynck, an elderly bohemian emigré who is both more and less than she appears; of Jason’s search to replace his dead grandfather’s irreplaceable smashed watch before the crime is discovered; of first cigarettes, first kisses, first Duran Duran LPs, and first deaths; of Margaret Thatcher’s recession; of Gypsies camping in the woods and the hysteria they inspire; and, even closer to home, of a slow-motion divorce in four seasons.<br><br>Pointed, funny, profound, left-field, elegiac, and painted with the stuff of life, <i>Black Swan Green </i>is David Mitchell’s subtlest and most effective achievement to date.<br><br><b>Praise for <i>Black Swan Green</i></b><br><br> “[David Mitchell has created] one of the most endearing, smart, and funny young narrators ever to rise up from the pages of a novel. . . . The always fresh and brilliant writing will carry readers back to their own childhoods. . . . This enchanting novel makes us remember exactly what it was like.”<b>—<i>The Boston Globe</i></b><br><br> “[David Mitchell is a] prodigiously daring and imaginative young writer. . . . As in the works of Thomas Pynchon and Herman Melville, one feels the roof of the narrative lifted off and oneself in thrall.”<b>—<i>Time</i></b>",
       "pageCount": 304,
       "rating": 4,
-      "categories": [
-        "Fiction"
-      ],
+      "categories": ["Fiction"],
       "searchInfo": [
         ". . . This enchanting novel makes us remember exactly what it was like.”—The Boston Globe “[David Mitchell is a] prodigiously daring and imaginative young writer. . .",
         "Charting thirteen months in the black hole between childhood and adolescence, this is a captivating novel, wry, painful and vibrant with the stuff of life."
@@ -66,13 +90,8 @@
       "description": "<p>James Joyce's novel Ulysses is said to be one of the most important works in Modernist literature. It details Leopold Bloom's passage through Dublin on an ordinary day: June 16, 1904. Causing controversy, obscenity trials and heated debates, Ulysses is a pioneering work that brims with puns, parodies, allusions, stream-of-consciousness writing and clever structuring. Modern Library ranked it as number one on its list of the twentieth century's 100 greatest English-language novels and Martin Amis called it one of the greatest novels ever written.</p><p>ULYSSES</p><p>Ulysses is a modernist novel by Irish writer James Joyce. It is considered to be one of the most important works of modernist literature, and has been called &quot;a demonstration and summation of the entire movement&quot;. Ulysses chronicles the peripatetic appointments and encounters of Leopold Bloom in Dublin in the course of an ordinary day, 16 June 1904. Ulysses is the Latinised name of Odysseus, the hero of Homer's epic poem Odyssey, and the novel establishes a series of parallels between its characters and events and those of the poem (the correspondence of Leopold Bloom to Odysseus, Molly Bloom to Penelope, and Stephen Dedalus to Telemachus). Joyce divided Ulysses into 18 chapters or &quot;episodes&quot;. At first glance much of the book may appear unstructured and chaotic; Joyce once said that he had &quot;put in so many enigmas and puzzles that it will keep the professors busy for centuries arguing over what I meant&quot;, which would earn the novel &quot;immortality&quot;. James Joyce (1882-1941) was an Irish novelist and poet, considered to be one of the most influential writers in the modernist avant-garde of the early 20th century. Joyce is best known for Ulysses, the short-story collection Dubliners, and the novels A Portrait of the Artist as a Young Man and Finnegans Wake.</p><p>ULYSSES</p><p>As the day begins, Stephen Dedalus is displeased with his friend and remains aloof. A little later, he teaches history at Garrett Deasy’s boys’ school.</p><p>ULYSSES</p><p>Leopold Bloom begins his day by preparing breakfast for his wife, Molly Bloom. He serves it to her in bed along with the mail.</p><p>ULYSSES</p><p>As their day unfolds, Joyce paints for us a picture of not only what’s happening outside but also what’s happening inside their minds.</p><p>ULYSSES</p><p>Drawing on the characters, motifs and symbols of Homer’s Odyssey, James Joyce’s Ulysses is a remarkable modernist novel. It has lived through various criticisms and controversies and has undergone several theatre, film and television adaptations. It continues to remain a literary masterpiece.</p>",
       "pageCount": 766,
       "rating": 4,
-      "categories": [
-        "Fiction",
-        "Classics"
-      ],
-      "searchInfo": [
-        "James Joyce's novel Ulysses is said to be one of the most important works in Modernist literature."
-      ]
+      "categories": ["Fiction", "Classics"],
+      "searchInfo": ["James Joyce's novel Ulysses is said to be one of the most important works in Modernist literature."]
     },
     {
       "id": "0521316928",
@@ -84,11 +103,7 @@
       "description": "<p>One of the most influential literary works of our time, One Hundred Years of Solitude remains a dazzling and original achievement by the masterful Gabriel Garcia Marquez, winner of the Nobel Prize in Literature.</p><p>One Hundred Years of Solitude tells the story of the rise and fall, birth and death of the mythical town of Macondo through the history of the Buendiá family. Inventive, amusing, magnetic, sad and alive with unforgettable men and women—brimming with truth, compassion, and a lyrical magic that strikes the soul—this novel is a masterpiece in the art of fiction.</p>",
       "pageCount": 417,
       "rating": 3.5,
-      "categories": [
-        "Fiction",
-        "Magic realism",
-        "Latin America"
-      ],
+      "categories": ["Fiction", "Magic realism", "Latin America"],
       "searchInfo": [
         "“The rise and fall, birth and death, of the mythical town of Macondo through the history of the Buendia family.",
         "One Hundred Years of Solitude is the first piece of literature since the Book of Genesis that should be required reading for the entire human race. . . . Mr. Garcia Marquez has done nothing less than to create in the reader a sense of all that is profound, meaningful, and meaningless in life.” —William Kennedy, New York Times Book Review "
@@ -104,12 +119,7 @@
       "description": "Completed only a few months before the author's death, The Brothers Karamazov is Dostoyevsky's largest, most expansive, most life-embracing work. Filled with human passions―lust, greed, love, jealousy, sorrow, and humor―the book is also infused with moral issues and the issue of collective guilt. A terrifying answer to man's eternal questions, this monumental work remains the crowning achievement of perhaps the finest novelist of all time. It is a murder mystery, a courtroom drama, and an exploration of erotic rivalry in a series of triangular love affairs involving the 'wicked and sentimental' Fyodor Pavlovich Karamazov and his three sons—the impulsive and sensual Dmitri; the coldly rational Ivan; and the healthy, red-cheeked young novice Alyosha. Through the gripping events of their story, Dostoevsky portrays the whole of Russian life, is social and spiritual striving, in what was both the golden age and a tragic turning point in Russian culture.",
       "pageCount": 1072,
       "rating": 5,
-      "categories": [
-        "Fiction",
-        "Classics",
-        "19th Centrury",
-        "Russia"
-      ],
+      "categories": ["Fiction", "Classics", "19th Centrury", "Russia"],
       "searchInfo": [
         "A terrifying answer to man&#39;s eternal questions, this monumental work remains the crowning achievement of perhaps the finest novelist of all time. From the Paperback edition."
       ]
@@ -124,9 +134,7 @@
       "description": "Voted America's Best-Loved Novel in PBS's The Great American Read Harper Lee's Pulitzer Prize-winning masterwork of honor and injustice in the deep South—and the heroism of one man in the face of blind and violent hatred One of the most cherished stories of all time, To Kill a Mockingbird has been translated into more than forty languages, sold more than forty million copies worldwide, served as the basis for an enormously popular motion picture, and was voted one of the best novels of the twentieth century by librarians across the country. A gripping, heart-wrenching, and wholly remarkable tale of coming-of-age in a South poisoned by virulent prejudice, it views a world of great beauty and savage inequities through the eyes of a young girl, as her father—a crusading local lawyer—risks everything to defend a black man unjustly accused of a terrible crime.",
       "pageCount": 336,
       "rating": 4.5,
-      "categories": [
-        "Fiction"
-      ],
+      "categories": ["Fiction"],
       "searchInfo": [
         "Voted America&#39;s Best-Loved Novel in PBS&#39;s The Great American Read Harper Lee&#39;s Pulitzer Prize-winning masterwork of honor and injustice in the deep South—and the heroism of one man in the face of blind and violent hatred One of the most ..."
       ]

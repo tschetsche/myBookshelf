@@ -1,26 +1,22 @@
-import { addBookshelvesToList, addBookshelfToList, addBookToShelf } from '../actions/bookshelf';
+import { initBookshelfList, addBookshelfToList, addBookToShelf } from '../actions/bookshelf';
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
   bookshelfList: [],
-  bookshelves: {},
 };
 
 const bookshelfReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(addBookshelvesToList, (state, action) => {
-      state.bookshelfList = [...new Set([...state.bookshelfList, ...action.payload])];
+    .addCase(initBookshelfList, (state, action) => {
+      state.bookshelfList = [...action.payload];
     })
     .addCase(addBookshelfToList, (state, action) => {
       state.bookshelfList = [...state.bookshelfList, action.payload];
     })
     .addCase(addBookToShelf, (state, action) => {
-      const { book, bookshelf } = action.payload;
-      const updatedBookshelf = [...new Set([...(state.bookshelves[bookshelf] || []), book])];
-      state.bookshelves = {
-        ...state.bookshelves,
-        [bookshelf]: updatedBookshelf,
-      };
+      const { bookshelfId, bookId } = action.payload;
+      const bookshelfIndex = state.bookshelfList.findIndex((el) => el.id === bookshelfId);
+      state.bookshelfList[bookshelfIndex].books = [...state.bookshelfList[bookshelfIndex].books, bookId];
     });
 });
 

@@ -1,1 +1,1 @@
-export const bookListSelector = (store) => store.bookshelf.bookshelfList;
+export const bookshelfSelector = (store) => store.bookshelf.bookshelfList;

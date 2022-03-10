@@ -1,26 +1,29 @@
 import React from 'react';
+import { useField } from 'formik';
 import styled from 'styled-components';
 
-const StyledDropdown = styled.div`
+const StyledFormikDropdown = styled.div`
   box-sizing: border-box;
+  font-family: 'montserrat';
+
+  label {
+    font-size: 14px;
+  }
+
   select {
     background-color: ${(props) => props.theme.baseBackgroundColor};
     border: thin solid ${(props) => props.theme.baseFontColor};
     border-radius: 4px;
     display: inline-block;
-    font-family: 'montserrat';
     line-height: 1.5em;
     padding: 0.5em 3.5em 0.5em 1em;
 
     margin: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
     -webkit-appearance: none;
     -moz-appearance: none;
   }
 
-  .select {
+  select {
     background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%),
       linear-gradient(to right, #ccc, #ccc);
     background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
@@ -28,7 +31,7 @@ const StyledDropdown = styled.div`
     background-repeat: no-repeat;
   }
 
-  .select:focus {
+  select:focus {
     background-image: linear-gradient(45deg, #0c4c5c 50%, transparent 50%), linear-gradient(135deg, transparent 50%, #0c4c5c 50%),
       linear-gradient(to right, #ccc, #ccc);
     background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em, calc(100% - 2.5em) 0.5em;
@@ -39,21 +42,24 @@ const StyledDropdown = styled.div`
   }
 `;
 
-const Dropdown = ({ id, label, options, onChange }) => {
+const FormikDropdown = ({ name, options, label, placeholder }) => {
+  const [field, meta, helpers] = useField(name);
+
   return (
-    <StyledDropdown>
-      <label htmlFor={id}>
-        {label}
-        <select className={'select'} id={id} onChange={onChange}>
-          {options.map((option) => (
-            <option value={option.value} key={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </label>
-    </StyledDropdown>
+    <StyledFormikDropdown>
+      {label && <label htmlFor={name}>{label}</label>}
+      <select id={name} {...field}>
+        <option disabled value={''}>
+          {placeholder}
+        </option>
+        {options.map((option) => (
+          <option value={option.value} key={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </StyledFormikDropdown>
   );
 };
 
-export default Dropdown;
+export default FormikDropdown;

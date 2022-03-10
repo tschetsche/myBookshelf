@@ -6,13 +6,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store/initStore';
 import { PersistGate } from 'redux-persist/integration/react';
+import attachStoreToFakeApi from './api/interceptors';
 
 class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
         <Provider store={store}>
-          <PersistGate persistor={persistor} loading={null}>
+          <PersistGate persistor={persistor} loading={null} onBeforeLift={attachStoreToFakeApi(store)}>
             <GlobalThemeProvider>
               <GlobalModalProvider>
                 <MainLayout />

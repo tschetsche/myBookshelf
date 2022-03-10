@@ -1,40 +1,61 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import Dropdown from '../../Dropdown/Dropdown';
-import { bookListSelector } from '../../../store/selectors/bookshelf';
+import { bookshelfSelector, selectItemsByCategory } from '../../../store/selectors/bookshelf';
+import { Formik, Form } from 'formik';
 import { addBookToShelf } from '../../../store/actions/bookshelf';
 import { useSelector } from 'react-redux';
+import FormikDropdown from '../../Formik/FormikDropdown';
+import FormikTextarea from '../../Formik/FormikTextarea';
+import FormikDatePicker from '../../Formik/FormikDatePicker';
+import Rating from '../../Rating/Rating';
+import CloseButton from '../CloseButton/CloseButton';
 
 const StyledAddToBookshelfModal = styled.div`
   position: fixed;
-  background: grey;
-  width: 500px;
-  height: 500px;
+  background: ${(props) => props.theme.toggleElementColor};
+  width: 600px;
+  height: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+  font-family: 'montserrat';
 
   .modal_header {
-    width: 30px;
+    margin: 15px;
   }
+
   .modal_content {
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: calc(500px - 60px);
+    label {
+      margin-right: 3px;
+      font-size: 14px;
+    }
   }
+
   .modal_controls {
     display: flex;
     flex-direction: row;
     width: 30px;
   }
+  .form_field {
+    margin-top: 6px;
+  }
+  .dates,
+  .rating {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 
-const AddToBookshelfModal = ({ title, setIsOpen }) => {
-  const bookshelfList = useSelector(bookListSelector);
-  const [selectedBookshelf, setSelectedBookshelf] = useState(bookshelfList[0]);
+const AddToBookshelfModal = ({ title, setIsOpen, bookId }) => {
+  const bookshelfList = useSelector(bookshelfSelector);
+  const [selectedBookshelf, setSelectedBookshelf] = useState(bookshelfList[0].id);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
@@ -42,14 +63,14 @@ const AddToBookshelfModal = ({ title, setIsOpen }) => {
   };
 
   const getBookShelfDropdownOptions = () => {
-    return bookshelfList.map((bookshelf) => ({
-      value: bookshelf,
-      label: bookshelf,
+    return bookshelfList.map(({ name, id }) => ({
+      value: id,
+      label: name,
     }));
   };
 
-  const addToBookshelf = (bookshelf) => {
-    dispatch(addBookToShelf({ bookshelf, book: title }));
+  const addToBookshelf = (bookshelfId) => {
+    dispatch(addBookToShelf({ bookshelfId: parseInt(bookshelfId), bookId }));
     setIsOpen(false);
   };
 
@@ -60,35 +81,41 @@ const AddToBookshelfModal = ({ title, setIsOpen }) => {
           <div className={'modal_title'}>{title}</div>
         </div>
         <div className={'modal_content'}>
-          <div className={'heading'}> Add to Bookshelf</div>
-          <div className={'shelf_select'}>
-            <Dropdown id={'bookShelf_select'} label={'Select bookshelf'} options={getBookShelfDropdownOptions()} onChange={handleChange} />
-          </div>
-          <div className={'rating'}>
-            <div className={'heading'}></div>
-            <div className={'rating_bar'}></div>
-          </div>
+          <Formik
+            initialValues={{ bookshelf: '', rating: '', startDate: new Date(), endDate: '' }}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+          >
+            <Form>
+              <div className='form_field'>
+                <FormikDropdown
+                  name={'bookshelf'}
+                  label={'Choose bookshelf:'}
+                  placeholder={'Select bookshelf'}
+                  options={getBookShelfDropdownOptions()}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='form_field rating'>
+                <label htmlFor='rating'>My rating:</label>
+                <Rating name={'rating'} />
+              </div>
+              <div className='form_field'>
+                <FormikTextarea name={'notes'} placeholder={'What did you think'} rows={4} />
+              </div>
+              <div className='form_field'>
+                <FormikTextarea name={'review'} placeholder={'Enter your review'} rows={12} />
+              </div>
+              <div className='form_field dates'>
+                <FormikDatePicker name={'startDate'} label={'Date started'} />
+                <FormikDatePicker name={'endDate'} label={'Date finished'} />
+              </div>
+              <button>submit</button>
+            </Form>
+          </Formik>
         </div>
-        <div className={'modal_footer'}>
-          <div className={'modal_controls'}>
-            <button
-              className={'cancel'}
-              onClick={() => {
-                setIsOpen(false);
-              }}
-            >
-              close
-            </button>
-            <button
-              className={'save'}
-              onClick={() => {
-                addToBookshelf(selectedBookshelf);
-              }}
-            >
-              save
-            </button>
-          </div>
-        </div>
+        <CloseButton onClose={setIsOpen} />
       </div>
     </StyledAddToBookshelfModal>
   );
