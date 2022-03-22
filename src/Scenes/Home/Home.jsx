@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
-import fakeApi from '../../api/fakeApi';
 import img from '../../assets/images/books.jpg';
-import { initBookshelfList } from '../../store/actions/bookshelf';
 
 const StyledHome = styled.div`
   .block {
@@ -20,14 +17,6 @@ const StyledHome = styled.div`
 `;
 
 const Home = (props) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    fakeApi.get('/bookshelves').then((response) => {
-      dispatch(initBookshelfList(response.data));
-    });
-  }, []);
-
   return (
     <StyledHome>
       <h3>Home</h3>

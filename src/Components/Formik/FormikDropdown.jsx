@@ -5,6 +5,8 @@ import styled from 'styled-components';
 const StyledFormikDropdown = styled.div`
   box-sizing: border-box;
   font-family: 'montserrat';
+  display: flex;
+  flex-direction: row;
 
   label {
     font-size: 14px;
@@ -12,7 +14,9 @@ const StyledFormikDropdown = styled.div`
 
   select {
     background-color: ${(props) => props.theme.baseBackgroundColor};
-    border: thin solid ${(props) => props.theme.baseFontColor};
+    border-width: thin;
+    border-style: solid;
+    border-color: ${(props) => (props.error && props.touched ? '#d93025' : props.theme.baseFontColor)};
     border-radius: 4px;
     display: inline-block;
     line-height: 1.5em;
@@ -40,24 +44,49 @@ const StyledFormikDropdown = styled.div`
     border-color: ${(props) => props.theme.accentFontColor};
     outline: 0;
   }
+  .select_error {
+    color: #d93025;
+    font-size: 10px;
+    padding-left: 8px;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    bottom: -0.5em;
+  }
+  .select {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 8px;
+  }
+  .select_label {
+    align-self: center;
+  }
 `;
 
 const FormikDropdown = ({ name, options, label, placeholder }) => {
   const [field, meta, helpers] = useField(name);
 
   return (
-    <StyledFormikDropdown>
-      {label && <label htmlFor={name}>{label}</label>}
-      <select id={name} {...field}>
-        <option disabled value={''}>
-          {placeholder}
-        </option>
-        {options.map((option) => (
-          <option value={option.value} key={option.value}>
-            {option.label}
+    <StyledFormikDropdown error={meta.error} touched={meta.touched}>
+      {label && (
+        <label htmlFor={name} className={'select_label'}>
+          {label}
+        </label>
+      )}
+      <div className='select'>
+        <select id={name} {...field}>
+          <option disabled value={''}>
+            {placeholder}
           </option>
-        ))}
-      </select>
+          {options.map((option) => (
+            <option value={option.value} key={option.value} disabled={option.disabled}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {meta.error && meta.touched && <div className={'select_error'}>{meta.error}</div>}
+      </div>
     </StyledFormikDropdown>
   );
 };

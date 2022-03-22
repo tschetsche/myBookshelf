@@ -1,26 +1,26 @@
-import { userLoggedIn, userLoggedOut } from '../actions/user';
+import { setUserLoggedIn, setUserLoggedOut } from '../actions/user';
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
   userName: '',
   userRoles: [],
   isLoggedIn: false,
-  bookshelves: [],
+  userId: '',
 };
 
 const user = createReducer(initialState, (builder) => {
   builder
-    .addCase(userLoggedIn, (state, action) => {
+    .addCase(setUserLoggedIn, (state, action) => {
       state.userName = action.payload.userName;
       state.userRoles = action.payload.userRoles;
       state.isLoggedIn = true;
-      state.bookshelves = action.payload.bookshelves;
+      state.userId = action.payload.userId;
     })
-    .addCase(userLoggedOut, (state, action) => {
+    .addCase(setUserLoggedOut, (state, action) => {
       state.userName = '';
       state.userRoles = [];
       state.isLoggedIn = false;
-      state.bookshelves = [];
+      state.userId = '';
     });
 });
 

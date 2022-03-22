@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { bookshelfSelector, selectItemsByCategory } from '../../../store/selectors/bookshelf';
+import { selectBookshelfList, selectUserBookMetaById } from '../../../store/selectors/bookshelf';
 import { Formik, Form } from 'formik';
-import { addBookToShelf } from '../../../store/actions/bookshelf';
+import { addBookToBookshelf, fetchUserLibrary, removeBookFromLibrary, updateUserBook } from '../../../store/actions/bookshelf';
 import { useSelector } from 'react-redux';
 import FormikDropdown from '../../Formik/FormikDropdown';
 import FormikTextarea from '../../Formik/FormikTextarea';
 import FormikDatePicker from '../../Formik/FormikDatePicker';
 import Rating from '../../Rating/Rating';
 import CloseButton from '../CloseButton/CloseButton';
+import { selectUserId } from '../../../store/selectors/user';
+import ColoredButton from '../../ColoredButton/ColoredButton';
 
 const StyledAddToBookshelfModal = styled.div`
   position: fixed;
   background: ${(props) => props.theme.toggleElementColor};
   width: 600px;
-  height: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
   font-family: 'montserrat';
 
+  .modal {
+    margin: 16px 0px;
+  }
   .modal_header {
     margin: 15px;
   }
@@ -51,16 +55,32 @@ const StyledAddToBookshelfModal = styled.div`
     display: flex;
     flex-direction: row;
   }
+  .remove_from_library {
+    outline: 0;
+    position: absolute;
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    padding-bottom: 8px;
+    padding-right: 15px;
+    color: #999999;
+    :hover {
+      text-decoration: underline;
+    }
+  }
+  .submit_btn {
+    margin: 12px 0px;
+  }
 `;
 
-const AddToBookshelfModal = ({ title, setIsOpen, bookId }) => {
-  const bookshelfList = useSelector(bookshelfSelector);
-  const [selectedBookshelf, setSelectedBookshelf] = useState(bookshelfList[0].id);
+const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }) => {
+  const bookshelfList = useSelector(selectBookshelfList);
+  const userBookMeta = useSelector((store) => selectUserBookMetaById(store, bookId));
+  const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
-
-  const handleChange = (event) => {
-    setSelectedBookshelf(event.target.value);
-  };
 
   const getBookShelfDropdownOptions = () => {
     return bookshelfList.map(({ name, id }) => ({
@@ -69,8 +89,8 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId }) => {
     }));
   };
 
-  const addToBookshelf = (bookshelfId) => {
-    dispatch(addBookToShelf({ bookshelfId: parseInt(bookshelfId), bookId }));
+  const handleDelete = () => {
+    dispatch(removeBookFromLibrary(userBookMeta.id));
     setIsOpen(false);
   };
 
@@ -82,9 +102,41 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId }) => {
         </div>
         <div className={'modal_content'}>
           <Formik
-            initialValues={{ bookshelf: '', rating: '', startDate: new Date(), endDate: '' }}
-            onSubmit={(values) => {
-              console.log(values);
+            initialValues={{
+              bookshelf: userBookMeta?.bookshelfId || '',
+              rating: '',
+              startDate: userBookMeta?.startDate || '',
+              endDate: userBookMeta?.endDate || '',
+              notes: userBookMeta?.notes || '',
+              review: userBookMeta?.review || '',
+            }}
+            onSubmit={({ bookshelf, startDate, endDate, notes, review }) => {
+              userBookMeta
+                ? dispatch(updateUserBook(userBookMeta.id, { startDate, endDate, notes, review, bookshelfId: parseInt(bookshelf), rating }))
+                : dispatch(
+                    addBookToBookshelf(userId, {
+                      startDate,
+                      endDate,
+                      notes,
+                      review,
+                      title,
+                      bookId,
+                      bookshelfId: parseInt(bookshelf),
+                      author,
+                      cover,
+                      rating,
+                    })
+                  );
+              setIsOpen(false);
+            }}
+            validate={(values) => {
+              const errorObj = {};
+              let isValid = true;
+              if (values.bookshelf === '') {
+                isValid = false;
+                errorObj.bookshelf = 'Bookshelf should be selected';
+              }
+              if (!isValid) return errorObj;
             }}
           >
             <Form>
@@ -94,7 +146,6 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId }) => {
                   label={'Choose bookshelf:'}
                   placeholder={'Select bookshelf'}
                   options={getBookShelfDropdownOptions()}
-                  onChange={handleChange}
                 />
               </div>
               <div className='form_field rating'>
@@ -111,11 +162,16 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId }) => {
                 <FormikDatePicker name={'startDate'} label={'Date started'} />
                 <FormikDatePicker name={'endDate'} label={'Date finished'} />
               </div>
-              <button>submit</button>
+              <ColoredButton type={'submit'} className={'submit_btn'} title={'Submit'} />
             </Form>
           </Formik>
         </div>
         <CloseButton onClose={setIsOpen} />
+        {userBookMeta && (
+          <button className={'remove_from_library'} onClick={handleDelete}>
+            Remove from my books
+          </button>
+        )}
       </div>
     </StyledAddToBookshelfModal>
   );

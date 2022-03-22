@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { bookListSelector } from 'store/selectors/bookList';
 import { replaceBookList } from 'store/actions/bookList';
 import fakeApi from '../../api/fakeApi';
+import { Outlet } from 'react-router-dom';
 
 const StyledBookList = styled.div`
   display: flex;

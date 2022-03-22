@@ -1,5 +1,5 @@
 import fakeApi from './fakeApi';
-import { userLoggedOut } from '../store/actions/user';
+import { userLogOut } from '../store/actions/user';
 import { storeApiError } from '../store/actions/globalAppActions';
 
 const attachStoreToFakeApi = (store) => {
@@ -14,7 +14,7 @@ const attachStoreToFakeApi = (store) => {
     },
     (response) => {
       if (response.code === 401) {
-        store.dispatch(userLoggedOut());
+        store.dispatch(userLogOut());
       } else {
         store.dispatch(storeApiError(response.response.data));
         throw response;

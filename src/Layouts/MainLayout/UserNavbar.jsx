@@ -9,7 +9,7 @@ import avatar from '../../assets/images/avatar.png';
 import { useSelector } from 'react-redux';
 import { userIsLoggedInSelector } from '../../store/selectors/user';
 import { useDispatch } from 'react-redux';
-import { userLoggedOut } from '../../store/actions/user';
+import { userLogOut } from '../../store/actions/user';
 
 const StyledUserNavbar = styled.nav`
   display: flex;
@@ -121,7 +121,7 @@ const UserNavbar = (props) => {
                 to={'/'}
                 className={'sing_out'}
                 onClick={() => {
-                  dispatch(userLoggedOut());
+                  dispatch(userLogOut());
                   setIsProfileCollapsed(true);
                 }}
               >

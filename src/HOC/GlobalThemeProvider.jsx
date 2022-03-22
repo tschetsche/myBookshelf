@@ -23,7 +23,7 @@ export const lightGlobalStyle = {
   baseFontColor: '#555',
   baseBackgroundColor: '#fff',
   navbarBackgroundColor: '#f5f6f7',
-  cardBackgroundColor: '#b6c48e',
+  cardBackgroundColor: '#fff',
   accentBackgroundColor: '#77815b',
   headerFontColor: '#d6ede1',
   accentFontColor: '#0c4c5c',

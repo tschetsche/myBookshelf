@@ -71,7 +71,16 @@ const Book = (props) => {
   }, []);
 
   const toggleModal = () => {
-    openModal(<AddToBookshelfModal setIsOpen={openModal} title={book.title} bookId={params.bookID} />);
+    openModal(
+      <AddToBookshelfModal
+        setIsOpen={openModal}
+        title={book.title}
+        bookId={params.bookID}
+        cover={book.cover}
+        author={book.author}
+        rating={book.rating}
+      />
+    );
   };
 
   return (
@@ -81,7 +90,7 @@ const Book = (props) => {
           <div className={'cover'}>
             <img src={book.cover} alt={book.title}></img>
           </div>
-          <ColoredButton className={'booshelf_add'} type={'button'} onClick={toggleModal} title={'Add to Bookshelf'} />
+          <ColoredButton className={'booshelf_add'} type={'button'} onClick={toggleModal} title={'Add to Bookshelf'} fullWidth={true} />
           <div className={'readers'}></div>
           <div className={'reviews'}></div>
         </div>

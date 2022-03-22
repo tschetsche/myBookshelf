@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import fakeApi from '../../../api/fakeApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLoggedIn } from '../../../store/actions/user';
+import { userLogIn, userRegister } from '../../../store/actions/user';
 import LoginForm from './LoginForm';
 import { Formik, Form } from 'formik';
 import FormikInput from '../../Formik/FormikInput';
 import ColoredButton from '../../ColoredButton/ColoredButton';
 import { toast } from 'react-toastify';
-import { bookshelfSelector } from '../../../store/selectors/bookshelf';
+import { selectApiError } from '../../../store/selectors/globalApp';
+import { useEffect } from 'react';
 
 const StyledLoginModal = styled.div`
   position: fixed;
@@ -27,47 +27,16 @@ const LoginModal = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
-  const errorMessage = useSelector((store) => store.globalAppState.APIError);
-  const bookshelfList = useSelector(bookshelfSelector);
+  const errorMessage = useSelector(selectApiError);
+  const [apiError, setApiError] = useState(null);
 
-  const handleLogin = ({ email, password }) => {
-    fakeApi
-      .post('/login', { email, password })
-      .then((response) => {
-        dispatch(
-          userLoggedIn({
-            userName: email,
-            userRoles: ['regularUser'],
-            isLoggedIn: response.data.accessToken,
-            bookshelves: response.data.user.bookshelves,
-          })
-        );
-        onClose(false);
-      })
-      .catch(() => {
-        toast.error(errorMessage);
-      });
-  };
-
-  const handleRegister = ({ email, password }) => {
-    const bookshelves = bookshelfList.map((el) => ({ ...el, books: [] }));
-    fakeApi
-      .post('/register', { email, password, bookshelves })
-      .then((response) => {
-        dispatch(
-          userLoggedIn({
-            userName: email,
-            userRoles: ['regularUser'],
-            isLoggedIn: response.data.accessToken,
-            bookshelves: response.data.user.bookshelves,
-          })
-        );
-        onClose(false);
-      })
-      .catch(() => {
-        toast.error(errorMessage);
-      });
-  };
+  useEffect(() => {
+    console.log('within use Effect');
+    if (errorMessage) {
+      toast.error(errorMessage);
+      setApiError(errorMessage);
+    }
+  }, [errorMessage]);
 
   const toggleModeState = () => {
     setIsLogin(!isLogin);
@@ -101,8 +70,10 @@ const LoginModal = ({ onClose }) => {
         <LoginForm onClose={onClose}>
           <Formik
             initialValues={{ email: email, password: '' }}
-            onSubmit={(values) => {
-              handleLogin(values);
+            onSubmit={({ email, password }) => {
+              dispatch(userLogIn({ email, password })).then(() => {
+                onClose(false);
+              });
             }}
             validate={(values) => validateForm(values)}
           >
@@ -112,7 +83,7 @@ const LoginModal = ({ onClose }) => {
                 <h6 className={'modal_desc'}>Welcome Back!</h6>
                 <FormikInput name='email' type='email' placeholder='Email' id='email'></FormikInput>
                 <FormikInput name='password' type='password' placeholder='Password' id='password'></FormikInput>
-                <ColoredButton type={'submit'} className={'submit_btn'} title={'Login'}></ColoredButton>
+                <ColoredButton type={'submit'} className={'submit_btn'} title={'Login'} fullWidth={true}></ColoredButton>
                 <div className={'register_block'}>
                   Don't have an account?
                   <button
@@ -136,8 +107,10 @@ const LoginModal = ({ onClose }) => {
         <LoginForm onClose={onClose}>
           <Formik
             initialValues={{ email: email, password: '' }}
-            onSubmit={(values) => {
-              handleRegister(values);
+            onSubmit={({ email, password }) => {
+              dispatch(userRegister({ email, password })).then(() => {
+                onClose(false);
+              });
             }}
             validate={(values) => validateForm(values)}
           >
@@ -147,7 +120,7 @@ const LoginModal = ({ onClose }) => {
                 <h6 className={'modal_desc'}>Join us</h6>
                 <FormikInput name='email' type='email' placeholder='Email' id='email'></FormikInput>
                 <FormikInput name='password' type='password' placeholder='Password' id='password'></FormikInput>
-                <ColoredButton type={'submit'} className={'submit_btn'} title={'Sign up'}></ColoredButton>
+                <ColoredButton type={'submit'} className={'submit_btn'} title={'Sign up'} fullWidth={true}></ColoredButton>
                 <div className={'login_block'}>
                   Already have an account?
                   <button

@@ -4,16 +4,14 @@ import styled from 'styled-components';
 
 const StyledCard = styled.div`
   width: 200px;
-  height: 200px;
-  background-color: ${(props) => props.theme.cardBackgroundColor};
+  background-color: ${(props) => props.theme.baseBackgroundColor};
   margin: 40px;
   color: ${(props) => props.theme.baseFontColor};
   border-radius: 2px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   font-family: 'montserrat';
+  padding: 15px 0;
+  display: inline-block;
+  vertical-align: top;
 
   .title {
     margin: 10px 0px;
@@ -26,6 +24,14 @@ const StyledCard = styled.div`
   .cover {
     display: block;
     text-align: center;
+    img {
+      width: 140px;
+      height: 213px;
+    }
+  }
+  .title {
+    text-align: center;
+    padding: 0px 4px;
   }
 `;
 

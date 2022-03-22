@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import RootRouter from '../../Route/RootRouter';
 import 'react-toastify/dist/ReactToastify.css';
 import Toast from '../../Components/Toast/Toast';
+import fakeApi from '../../api/fakeApi';
+import { initBookshelfList } from '../../store/actions/bookshelf';
+import { useDispatch } from 'react-redux';
 
 const StyledMainLayout = styled.div`
   background-color: ${(props) => props.theme.baseBackgroundColor};
@@ -48,6 +51,14 @@ const StyledMainLayout = styled.div`
 `;
 
 const MainLayout = (props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fakeApi.get('/bookshelves').then((response) => {
+      dispatch(initBookshelfList(response.data));
+    });
+  }, []);
+
   return (
     <StyledMainLayout>
       <div className={'layout'}>

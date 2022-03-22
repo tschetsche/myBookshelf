@@ -9,14 +9,18 @@ const StyledColoredButton = styled.button`
   border-radius: 2px;
   background: #106972;
   cursor: pointer;
-  width: 100%;
+  width: ${(props) => (props.fullWidth ? '100%' : 'fit-content')};
   &:hover {
     background: ${(props) => props.theme.accentFontColor};
   }
 `;
 
-const ColoredButton = ({ title, ...props }) => {
-  return <StyledColoredButton {...props}>{title}</StyledColoredButton>;
+const ColoredButton = ({ title, fullWidth, ...props }) => {
+  return (
+    <StyledColoredButton {...props} fullWidth={fullWidth}>
+      {title}
+    </StyledColoredButton>
+  );
 };
 
 export default ColoredButton;

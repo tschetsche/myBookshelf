@@ -1,15 +1,30 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import BookList from 'Scenes/BookList/BookList';
 import Book from 'Scenes/Book/Book';
 import Home from 'Scenes/Home/Home';
 import Profile from 'Scenes/Profile/Profile';
 import Library from '../Scenes/Library/Library';
+import LoginModal from '../Components/Modal/LoginModal/LoginModal';
+import { ModalContext } from '../HOC/GlobalModalProvider';
+import { useSelector } from 'react-redux';
+import { userIsLoggedInSelector } from '../store/selectors/user';
 
 const RootRouter = () => {
+  const openModal = useContext(ModalContext);
+  const isLoggedIn = useSelector(userIsLoggedInSelector);
+
+  const renderForLoggedIn = (component) => {
+    if (isLoggedIn) {
+      openModal(<LoginModal onClose={openModal} />);
+    }
+    return component;
+  };
+
   return (
     <Routes>
       <Route path={'/books'} element={<BookList />} />
+      {/* <Route path={'/books'} element={() => renderForLoggedIn(<BookList />)} /> */}
       <Route path={'/book/:bookID'} element={<Book />} />
       <Route path={'/'} element={<Home />} />
       <Route path={'/profile'} element={<Profile />} />
