@@ -12,6 +12,7 @@ import Rating from '../../Rating/Rating';
 import CloseButton from '../CloseButton/CloseButton';
 import { selectUserId } from '../../../store/selectors/user';
 import ColoredButton from '../../ColoredButton/ColoredButton';
+import { formatISOString } from '../../../util/dataUtil';
 
 const StyledAddToBookshelfModal = styled.div`
   position: fixed;
@@ -105,14 +106,24 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
             initialValues={{
               bookshelf: userBookMeta?.bookshelfId || '',
               rating: '',
-              startDate: userBookMeta?.startDate || '',
-              endDate: userBookMeta?.endDate || '',
+              startDate: userBookMeta?.startDate ? formatISOString(userBookMeta.startDate) : '',
+              endDate: userBookMeta?.endDate ? formatISOString(userBookMeta.endDate) : '',
               notes: userBookMeta?.notes || '',
               review: userBookMeta?.review || '',
             }}
             onSubmit={({ bookshelf, startDate, endDate, notes, review }) => {
               userBookMeta
-                ? dispatch(updateUserBook(userBookMeta.id, { startDate, endDate, notes, review, bookshelfId: parseInt(bookshelf), rating }))
+                ? dispatch(
+                    updateUserBook(userBookMeta.id, {
+                      startDate,
+                      endDate,
+                      notes,
+                      review,
+                      bookshelfId: parseInt(bookshelf),
+                      rating,
+                      dateModified: new Date(),
+                    })
+                  )
                 : dispatch(
                     addBookToBookshelf(userId, {
                       startDate,
@@ -125,6 +136,7 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
                       author,
                       cover,
                       rating,
+                      dateModified: new Date(),
                     })
                   );
               setIsOpen(false);

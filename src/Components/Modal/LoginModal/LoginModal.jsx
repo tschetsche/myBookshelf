@@ -28,13 +28,10 @@ const LoginModal = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
   const errorMessage = useSelector(selectApiError);
-  const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
-    console.log('within use Effect');
     if (errorMessage) {
       toast.error(errorMessage);
-      setApiError(errorMessage);
     }
   }, [errorMessage]);
 

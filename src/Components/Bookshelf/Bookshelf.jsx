@@ -7,30 +7,46 @@ import { BsFillGridFill, BsListUl } from 'react-icons/bs';
 import BookshelfList from './BookshelfList';
 import BookshelfGrid from './BookshelfGrid';
 import styled from 'styled-components';
+import { formatISOString } from '../../util/dataUtil';
 
 const BOOKSHELF_TABLE_COLUMNS = [
-  { name: 'cover', dataKey: 'cover' },
-  { name: 'title', dataKey: 'title' },
-  { name: 'author', dataKey: 'author' },
+  { name: 'cover', dataKey: 'cover', isSortable: false },
+  { name: 'title', dataKey: 'title', isSortable: true },
+  { name: 'author', dataKey: 'author', isSortable: true },
   {
     name: 'rating',
     dataKey: 'rating',
+    isSortable: true,
   },
   {
     name: 'review',
     dataKey: 'review',
+    isSortable: true,
   },
   {
     name: 'notes',
     dataKey: 'notes',
+    isSortable: true,
   },
   {
     name: 'date started',
     dataKey: 'startDate',
+    isSortable: true,
+  },
+  {
+    name: 'date ended',
+    dataKey: 'endDate',
+    isSortable: true,
+  },
+  {
+    name: 'last modified',
+    dataKey: 'dateModified',
+    isSortable: true,
   },
   {
     name: '',
     dataKey: 'actions',
+    isSortable: false,
   },
 ];
 
@@ -74,11 +90,22 @@ const Bookshelf = ({ bookshelfId }) => {
 
   useEffect(() => {
     dispatch(fetchUserLibrary(userId));
-  }, []);
+  }, [books]);
 
   if (!books) {
     return <div>No books found for this bookshelf</div>;
   }
+
+  const formatBookList = (bookList) => {
+    return bookList.map(({ startDate, endDate, dateModified, ...book }) => {
+      return {
+        startDate: startDate ? formatISOString(startDate) : startDate,
+        endDate: endDate ? formatISOString(endDate) : endDate,
+        dateModified: dateModified ? formatISOString(dateModified) : dateModified,
+        ...book,
+      };
+    });
+  };
 
   return (
     <StyledBookshelf>
@@ -103,7 +130,11 @@ const Bookshelf = ({ bookshelfId }) => {
         </div>
       </div>
       <div className={'bookshelf_content'}>
-        {isListView ? <BookshelfList books={books} /> : <BookshelfGrid books={books} columns={BOOKSHELF_TABLE_COLUMNS} />}
+        {isListView ? (
+          <BookshelfList books={books} />
+        ) : (
+          <BookshelfGrid books={() => formatBookList(books)} columns={BOOKSHELF_TABLE_COLUMNS} />
+        )}
       </div>
     </StyledBookshelf>
   );

@@ -9,6 +9,7 @@ import LoginModal from '../Components/Modal/LoginModal/LoginModal';
 import { ModalContext } from '../HOC/GlobalModalProvider';
 import { useSelector } from 'react-redux';
 import { userIsLoggedInSelector } from '../store/selectors/user';
+import Search from '../Scenes/Search/Search';
 
 const RootRouter = () => {
   const openModal = useContext(ModalContext);
@@ -29,6 +30,7 @@ const RootRouter = () => {
       <Route path={'/'} element={<Home />} />
       <Route path={'/profile'} element={<Profile />} />
       <Route path={'/lib'} element={<Library />} />
+      <Route path={'/search'} element={<Search />} />
     </Routes>
   );
 };

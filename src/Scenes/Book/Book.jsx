@@ -6,6 +6,9 @@ import AddToBookshelfModal from '../../Components/Modal/AddToBookshelfModal/AddT
 import { ModalContext } from 'HOC/GlobalModalProvider';
 import Rating from '../../Components/Rating/Rating';
 import ColoredButton from '../../Components/ColoredButton/ColoredButton';
+import { useSelector } from 'react-redux';
+import { userIsLoggedInSelector } from '../../store/selectors/user';
+import LoginModal from '../../Components/Modal/LoginModal/LoginModal';
 
 const StyledBook = styled.div`
   width: 65vw;
@@ -63,6 +66,7 @@ const Book = (props) => {
   const params = useParams();
 
   const openModal = useContext(ModalContext);
+  const isLoggedIn = useSelector(userIsLoggedInSelector);
 
   useEffect(() => {
     fakeApi.get(`/book/${params.bookID}`).then((response) => {
@@ -71,16 +75,18 @@ const Book = (props) => {
   }, []);
 
   const toggleModal = () => {
-    openModal(
-      <AddToBookshelfModal
-        setIsOpen={openModal}
-        title={book.title}
-        bookId={params.bookID}
-        cover={book.cover}
-        author={book.author}
-        rating={book.rating}
-      />
-    );
+    isLoggedIn
+      ? openModal(
+          <AddToBookshelfModal
+            setIsOpen={openModal}
+            title={book.title}
+            bookId={params.bookID}
+            cover={book.cover}
+            author={book.author}
+            rating={book.rating}
+          />
+        )
+      : openModal(<LoginModal onClose={openModal} />);
   };
 
   return (

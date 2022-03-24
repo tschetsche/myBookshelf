@@ -40,15 +40,44 @@ const StyledBookshelf = styled.table`
       color: ${(props) => props.theme.accentFontColor};
     }
   }
+  [class$='column_sortable'] {
+    &:hover {
+      color: ${(props) => props.theme.accentFontColor};
+      cursor: default;
+    }
+  }
 `;
 
 const BookshelfGrid = ({ books, columns }) => {
-  const [bookList, setBookList] = useState([]);
+  const [bookList, setBookList] = useState(books);
+  const [sortDirection, setSortDirection] = useState(1);
+  const [sortField, setSortField] = useState('');
   const openModal = useContext(ModalContext);
 
   useEffect(() => {
     setBookList(books);
   }, [books]);
+
+  const sortTable = (table) => {
+    const newTable = [...table];
+    newTable.sort((a, b) => {
+      return a[sortField] > b[sortField] ? sortDirection : -1 * sortDirection;
+    });
+    return newTable;
+  };
+
+  useEffect(() => {
+    setBookList(sortTable(bookList));
+  }, [sortField, sortDirection]);
+
+  const handleGridSort = (fieldKey) => () => {
+    if (fieldKey !== sortField) {
+      setSortField(fieldKey);
+      setSortDirection(1);
+    } else {
+      setSortDirection(-1 * sortDirection);
+    }
+  };
 
   const toggleModal = (book) => {
     openModal(
@@ -68,7 +97,15 @@ const BookshelfGrid = ({ books, columns }) => {
       <thead>
         <tr>
           {columns.map((column) => {
-            return <th key={column.name}>{column.name}</th>;
+            return (
+              <th
+                key={column.name}
+                onClick={column.isSortable ? handleGridSort(column.dataKey) : undefined}
+                className={column.isSortable ? `${column.name}_column_sortable` : `${column.name}_column`}
+              >
+                {column.name}
+              </th>
+            );
           })}
         </tr>
       </thead>
