@@ -19,7 +19,7 @@ const bookshelfReducer = createReducer(initialState, (builder) => {
       state.library = [...booksToKeep, action.payload];
     })
     .addCase(removeBook, (state, action) => {
-      const booksToKeep = state.library.filter((book) => book.id !== action.payload.id);
+      const booksToKeep = state.library.filter((book) => book.id !== action.payload);
       state.library = [...booksToKeep];
     })
     .addCase(addBookToShelf, (state, action) => {

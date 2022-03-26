@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserLibrary } from '../../store/actions/bookshelf';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { selectBookshelfById } from '../../store/selectors/bookshelf';
-import { selectUserId } from '../../store/selectors/user';
 import { BsFillGridFill, BsListUl } from 'react-icons/bs';
 import BookshelfList from './BookshelfList';
 import BookshelfGrid from './BookshelfGrid';
@@ -82,15 +80,8 @@ const StyledBookshelf = styled.div`
 
 const Bookshelf = ({ bookshelfId }) => {
   const [isListView, setIsListView] = useState(true);
-  const userId = useSelector(selectUserId);
 
   const books = useSelector((store) => selectBookshelfById(store, bookshelfId));
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUserLibrary(userId));
-  }, [books]);
 
   if (!books) {
     return <div>No books found for this bookshelf</div>;
@@ -130,11 +121,7 @@ const Bookshelf = ({ bookshelfId }) => {
         </div>
       </div>
       <div className={'bookshelf_content'}>
-        {isListView ? (
-          <BookshelfList books={books} />
-        ) : (
-          <BookshelfGrid books={() => formatBookList(books)} columns={BOOKSHELF_TABLE_COLUMNS} />
-        )}
+        {isListView ? <BookshelfList books={books} /> : <BookshelfGrid books={formatBookList(books)} columns={BOOKSHELF_TABLE_COLUMNS} />}
       </div>
     </StyledBookshelf>
   );

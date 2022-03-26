@@ -16,10 +16,12 @@ const RootRouter = () => {
   const isLoggedIn = useSelector(userIsLoggedInSelector);
 
   const renderForLoggedIn = (component) => {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       openModal(<LoginModal onClose={openModal} />);
+      // useNavigate
+    } else {
+      return component;
     }
-    return component;
   };
 
   return (
@@ -30,6 +32,7 @@ const RootRouter = () => {
       <Route path={'/'} element={<Home />} />
       <Route path={'/profile'} element={<Profile />} />
       <Route path={'/lib'} element={<Library />} />
+      {/* <Route path={'/lib'} element={() => renderForLoggedIn(<Library />)} /> */}
       <Route path={'/search'} element={<Search />} />
     </Routes>
   );
