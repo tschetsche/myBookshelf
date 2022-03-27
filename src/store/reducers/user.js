@@ -1,4 +1,4 @@
-import { setUserLoggedIn, setUserLoggedOut } from '../actions/user';
+import { setUserLoggedIn, setUserLoggedOut, updateUserEmail } from '../actions/user';
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -21,6 +21,9 @@ const user = createReducer(initialState, (builder) => {
       state.userRoles = [];
       state.isLoggedIn = false;
       state.userId = '';
+    })
+    .addCase(updateUserEmail, (state, action) => {
+      state.userName = action.payload;
     });
 });
 

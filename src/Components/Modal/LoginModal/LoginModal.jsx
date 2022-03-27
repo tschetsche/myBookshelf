@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { userLogIn, userRegister } from '../../../store/actions/user';
 import LoginForm from './LoginForm';
 import { Formik, Form } from 'formik';
 import FormikInput from '../../Formik/FormikInput';
 import ColoredButton from '../../ColoredButton/ColoredButton';
-import { toast } from 'react-toastify';
-import { selectApiError } from '../../../store/selectors/globalApp';
-import { useEffect } from 'react';
+import { validateEmail } from '../../../util/emailUtil';
 
 const StyledLoginModal = styled.div`
   position: fixed;
@@ -27,24 +25,9 @@ const LoginModal = ({ onClose }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
-  const errorMessage = useSelector(selectApiError);
-
-  useEffect(() => {
-    if (errorMessage) {
-      toast.error(errorMessage);
-    }
-  }, [errorMessage]);
 
   const toggleModeState = () => {
     setIsLogin(!isLogin);
-  };
-
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
   };
 
   const validateForm = (values) => {
@@ -68,9 +51,13 @@ const LoginModal = ({ onClose }) => {
           <Formik
             initialValues={{ email: email, password: '' }}
             onSubmit={({ email, password }) => {
-              dispatch(userLogIn({ email, password })).then(() => {
-                onClose(false);
-              });
+              dispatch(
+                userLogIn({
+                  email,
+                  password,
+                  onSuccess: () => onClose(false),
+                })
+              );
             }}
             validate={(values) => validateForm(values)}
           >
@@ -105,9 +92,7 @@ const LoginModal = ({ onClose }) => {
           <Formik
             initialValues={{ email: email, password: '' }}
             onSubmit={({ email, password }) => {
-              dispatch(userRegister({ email, password })).then(() => {
-                onClose(false);
-              });
+              dispatch(userRegister({ email, password, onSuccess: () => onClose(false) }));
             }}
             validate={(values) => validateForm(values)}
           >

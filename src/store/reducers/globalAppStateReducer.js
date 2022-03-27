@@ -1,4 +1,4 @@
-import { storeApiError } from '../actions/globalAppActions';
+import { storeApiError, removeApiError } from '../actions/globalAppActions';
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -6,9 +6,13 @@ const initialState = {
 };
 
 const globalAppStateReducer = createReducer(initialState, (builder) => {
-  builder.addCase(storeApiError, (state, action) => {
-    state.APIError = action.payload;
-  });
+  builder
+    .addCase(storeApiError, (state, action) => {
+      state.APIError = action.payload;
+    })
+    .addCase(removeApiError, (state, action) => {
+      state.APIError = '';
+    });
 });
 
 export default globalAppStateReducer;

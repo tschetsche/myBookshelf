@@ -2,6 +2,7 @@ import React, { memo, useState } from 'react';
 import { ThemeProvider, createGlobalStyle, StyleSheetManager } from 'styled-components';
 
 import montserratFont from 'assets/fonts/Montserrat-Regular.ttf';
+import sourceSansProFont from 'assets/fonts/SourceSansPro-Regular.ttf';
 
 export const ThemeContext = React.createContext('');
 
@@ -17,6 +18,11 @@ body {
 @font-face {
   font-family: 'montserrat';
   src: url(${montserratFont});
+}
+
+@font-face {
+  font-family: 'sourceSansPro';
+  src: url(${sourceSansProFont});
 }`;
 
 export const lightGlobalStyle = {

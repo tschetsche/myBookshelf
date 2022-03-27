@@ -7,6 +7,9 @@ import Toast from '../../Components/Toast/Toast';
 import fakeApi from '../../api/fakeApi';
 import { initBookshelfList } from '../../store/actions/bookshelf';
 import { useDispatch } from 'react-redux';
+import { selectApiError } from '../../store/selectors/globalApp';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const StyledMainLayout = styled.div`
   background-color: ${(props) => props.theme.baseBackgroundColor};
@@ -52,12 +55,19 @@ const StyledMainLayout = styled.div`
 
 const MainLayout = (props) => {
   const dispatch = useDispatch();
+  const apiError = useSelector(selectApiError);
 
   useEffect(() => {
     fakeApi.get('/bookshelves').then((response) => {
       dispatch(initBookshelfList(response.data));
     });
   }, []);
+
+  useEffect(() => {
+    if (apiError) {
+      toast.error(apiError);
+    }
+  }, [apiError]);
 
   return (
     <StyledMainLayout>
