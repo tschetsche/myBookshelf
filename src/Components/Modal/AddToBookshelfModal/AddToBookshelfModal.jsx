@@ -26,7 +26,7 @@ const StyledAddToBookshelfModal = styled.div`
   font-family: 'montserrat';
 
   .modal {
-    margin: 16px 0px 28px 0px;
+    margin: 16px 0px;
   }
   .modal_header {
     margin: 15px;
@@ -50,7 +50,7 @@ const StyledAddToBookshelfModal = styled.div`
     width: 30px;
   }
   .form_field {
-    margin-top: 6px;
+    margin-top: 16px;
   }
   .dates,
   .rating {
@@ -77,8 +77,7 @@ const StyledAddToBookshelfModal = styled.div`
     margin: 12px 0px;
   }
   .form_controls {
-    position: absolute;
-    bottom: 5px;
+    margin-top: 18px;
   }
 `;
 
@@ -117,7 +116,6 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
               review: userBookMeta?.review || '',
             }}
             onSubmit={({ bookshelf, startDate, endDate, notes, review }) => {
-              // console.log(userBookMeta);
               userBookMeta
                 ? dispatch(
                     updateUserBook(userBookMeta.id, {

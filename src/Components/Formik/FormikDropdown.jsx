@@ -51,7 +51,7 @@ const StyledFormikDropdown = styled.div`
     position: absolute;
     right: 0;
     width: 100%;
-    bottom: -0.5em;
+    bottom: -1.5em;
   }
   .select {
     display: flex;
