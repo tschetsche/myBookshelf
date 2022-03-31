@@ -4,12 +4,11 @@ import styled from 'styled-components';
 import ColoredButton from '../../Components/ColoredButton/ColoredButton';
 import FormikInput from '../../Components/Formik/FormikInput';
 import { validateEmail } from '../../util/emailUtil';
-import CloseButton from '../../Components/Modal/CloseButton/CloseButton';
+import CloseButton from '../../Components/CloseButton/CloseButton';
 import { useDispatch } from 'react-redux';
 import { selectUserName } from '../../store/selectors/user';
 import { useSelector } from 'react-redux';
 import { changeUserEmail } from '../../store/actions/user';
-import { selectApiError } from '../../store/selectors/globalApp';
 
 const StyledChangeEmailForm = styled.div`
   margin: 36px 8px 18px 8px;
@@ -19,7 +18,6 @@ const ChangeEmailForm = ({ handleClose, userId }) => {
   const dispatch = useDispatch();
 
   const userEmail = useSelector(selectUserName);
-  const apiError = useSelector(selectApiError);
 
   return (
     <StyledChangeEmailForm>

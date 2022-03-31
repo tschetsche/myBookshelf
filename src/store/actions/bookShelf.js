@@ -14,8 +14,8 @@ const addBookToBookshelfFinish = createAction('addBookToBookshelfFinish');
 export const addBookToBookshelf = (userId, book) => {
   return (dispatch, getState) => {
     dispatch(addBookToBookshelfStart);
-    fakeApi.post(`user/${userId}/library`, book).then(() => {
-      dispatch(addBookToShelf(book));
+    fakeApi.post(`user/${userId}/library`, book).then((response) => {
+      dispatch(addBookToShelf(response.data));
     });
     dispatch(addBookToBookshelfFinish);
   };

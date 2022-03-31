@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import login from '../../../assets/images/login.jpg';
-import CloseButton from '../CloseButton/CloseButton';
+import CloseButton from '../../CloseButton/CloseButton';
 
 const StyledLoginForm = styled.div`
   display: flex;

@@ -1,0 +1,58 @@
+import React from 'react';
+import { useField } from 'formik';
+import styled from 'styled-components';
+
+const StyledFormikCheckbox = styled.div`
+  .checkbox_block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .filter_option__wrapper {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .filter_option__label {
+    display: block;
+    width: 100%;
+    font-size: 1em;
+    line-height: 1;
+    max-width: none;
+    transition: color 0.2s;
+  }
+  .option_label__text {
+    font-size: 0.75em;
+    line-height: 2.5;
+    min-height: 2.5em;
+    max-width: 22.5em;
+    color: inherit;
+    max-width: none;
+    max-width: none;
+    vertical-align: middle;
+  }
+  .filter_option__label {
+    margin-left: 8px;
+  }
+`;
+
+const FormikCheckbox = ({ label, ...props }) => {
+  const [field, meta, helpers] = useField(props.name);
+
+  return (
+    <StyledFormikCheckbox>
+      <div className={'checkbox_block'}>
+        <input {...field} {...props} className='filter_option__input' type='checkbox'></input>
+        <label className={'filter_option__label'}>
+          <span className={'option_label__text'}>{label}</span>
+        </label>
+      </div>
+    </StyledFormikCheckbox>
+  );
+};
+
+export default FormikCheckbox;

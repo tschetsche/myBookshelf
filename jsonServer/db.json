@@ -1,8 +1,8 @@
 {
   "users": [
     {
-      "email": "test@email.com",
-      "password": "$2a$10$fHChZQS6grBNDpbHipDm4OVAR15f.TXgprbcPIIwuu8zyuP5Iq2OK",
+      "email": "test3@email.com",
+      "password": "$2a$10$PTHD/QmMLDbgGXcNsXrA.encON6Q5x0TdESUQsYxRSNYzGTYm439u",
       "id": 1
     },
     {
@@ -16,22 +16,35 @@
       "id": 3
     }
   ],
-  "library": [],
+  "library": [
+    {
+      "startDate": null,
+      "endDate": "2022-03-17T21:00:00.000Z",
+      "notes": "235235",
+      "review": "235235",
+      "title": "Ulysses",
+      "bookId": "0520253973",
+      "bookshelfId": 3,
+      "author": "James Joyce",
+      "cover": "https://books.google.com/books/content?id=FVOG9i2QwUIC&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+      "rating": 4,
+      "dateModified": "2022-03-28T18:50:40.874Z",
+      "userId": "1",
+      "id": 1
+    }
+  ],
   "bookshelves": [
     {
       "name": "Want to read",
-      "id": 1,
-      "path": "toread"
+      "id": 1
     },
     {
       "name": "Reading now",
-      "id": 2,
-      "path": "reading"
+      "id": 2
     },
     {
       "name": "Read",
-      "id": 3,
-      "path": "read"
+      "id": 3
     }
   ],
   "books": [
@@ -135,6 +148,31 @@
       "searchInfo": [
         "Voted America&#39;s Best-Loved Novel in PBS&#39;s The Great American Read Harper Lee&#39;s Pulitzer Prize-winning masterwork of honor and injustice in the deep South—and the heroism of one man in the face of blind and violent hatred One of the most ..."
       ]
+    },
+    {
+      "id": "0141938323",
+      "title": "A Year in Provence",
+      "cover": "http://books.google.com/books/content?id=dy4GLtsjvLMC&printsec=frontcover&img=1&zoom=1",
+      "subtitle": "",
+      "author": "Peter Mayle",
+      "publishDate": "1989-31-12",
+      "description": "In this witty and warm-hearted account, Peter Mayle tells what it is like to realize a long-cherished dream and actually move into a 200-year-old stone farmhouse in the remote country of the Lubéron with his wife and two large dogs. He endures January's frosty mistral as it comes howling down the Rhône Valley, discovers the secrets of goat racing through the middle of town, and delights in the glorious regional cuisine. A Year in Provence transports us into all the earthy pleasures of Provençal life and lets us live vicariously at a tempo governed by seasons, not by days.",
+      "pageCount": 224,
+      "rating": 3.5,
+      "categories": ["Travel", "Autobiography", "Nonfiction"],
+      "searchInfo": ["One of the most successful travel books of all time... Mayle created a new travel genre"]
+    },
+    {
+      "id": "1448111854",
+      "title": "A Widow for One Year",
+      "cover": "https://books.google.com/books/content?id=Jfn7fRhKE0AC&printsec=frontcover&img=1&zoom=1",
+      "subtitle": "",
+      "author": "John Irving",
+      "publishDate": "1999-01-02",
+      "description": "One night when she was four and sleeping in the bottom bunk of her bunk bed, Ruth Cole awoke to the sound of lovemaking - it was coming from her parents' bedroom.'This is the story of Ruth Cole. It is told in three parts: on Long Island, in the summer of 1958, when she is only four; in 1990, when she is an unmarried woman whose personal life is not nearly as successful as her literary career; and in the autumn of 1995, when Ruth Cole is a forty-one-year-old widow and mother. She's also about to fall in love for the first time...",
+      "pageCount": 656,
+      "rating": 4,
+      "categories": ["Fiction", "Novel", "Contemporary"]
     }
   ]
 }

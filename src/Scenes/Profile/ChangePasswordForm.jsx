@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik';
 import styled from 'styled-components';
 import ColoredButton from '../../Components/ColoredButton/ColoredButton';
 import FormikInput from '../../Components/Formik/FormikInput';
-import CloseButton from '../../Components/Modal/CloseButton/CloseButton';
+import CloseButton from '../../Components/CloseButton/CloseButton';
 import { useDispatch } from 'react-redux';
 import { changeUserPassword } from '../../store/actions/user';
 

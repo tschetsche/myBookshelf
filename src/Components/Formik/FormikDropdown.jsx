@@ -57,7 +57,6 @@ const StyledFormikDropdown = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
-    padding-bottom: 8px;
   }
   .select_label {
     align-self: center;

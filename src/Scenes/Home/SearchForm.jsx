@@ -35,7 +35,7 @@ const SearchForm = (props) => {
       >
         {({ values }) => (
           <Form>
-            {toSearch && <Navigate to={`/search?book=${values.search}`} />}
+            {toSearch && <Navigate to={`/search?book=${encodeURIComponent(values.search)}`} />}
             <div className={'search_form_wrapper'}>
               <div className={'search_input search_field'}>
                 <FormikSearchInput name='search' type='text' placeholder='Enter book name' id='search'></FormikSearchInput>

@@ -3,18 +3,19 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { selectBookshelfList, selectUserBookMetaById } from '../../../store/selectors/bookshelf';
 import { Formik, Form } from 'formik';
-import { addBookToBookshelf, fetchUserLibrary, removeBookFromLibrary, updateUserBook } from '../../../store/actions/bookshelf';
+import { addBookToBookshelf, removeBookFromLibrary, updateUserBook } from '../../../store/actions/bookshelf';
 import { useSelector } from 'react-redux';
 import FormikDropdown from '../../Formik/FormikDropdown';
 import FormikTextarea from '../../Formik/FormikTextarea';
 import FormikDatePicker from '../../Formik/FormikDatePicker';
 import Rating from '../../Rating/Rating';
-import CloseButton from '../CloseButton/CloseButton';
+import CloseButton from '../../CloseButton/CloseButton';
 import { selectUserId } from '../../../store/selectors/user';
 import ColoredButton from '../../ColoredButton/ColoredButton';
-import { formatISOString } from '../../../util/dataUtil';
+import { isDateBeforeOtherDate, isFutureDate } from '../../../util/dataUtil';
 
 const StyledAddToBookshelfModal = styled.div`
+  border-radius: 10px;
   position: fixed;
   background: ${(props) => props.theme.toggleElementColor};
   width: 600px;
@@ -25,7 +26,7 @@ const StyledAddToBookshelfModal = styled.div`
   font-family: 'montserrat';
 
   .modal {
-    margin: 16px 0px;
+    margin: 16px 0px 28px 0px;
   }
   .modal_header {
     margin: 15px;
@@ -75,6 +76,10 @@ const StyledAddToBookshelfModal = styled.div`
   .submit_btn {
     margin: 12px 0px;
   }
+  .form_controls {
+    position: absolute;
+    bottom: 5px;
+  }
 `;
 
 const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }) => {
@@ -106,17 +111,18 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
             initialValues={{
               bookshelf: userBookMeta?.bookshelfId || '',
               rating: '',
-              startDate: userBookMeta?.startDate ? formatISOString(userBookMeta.startDate) : '',
-              endDate: userBookMeta?.endDate ? formatISOString(userBookMeta.endDate) : '',
+              startDate: userBookMeta?.startDate ? new Date(userBookMeta.startDate) : '',
+              endDate: userBookMeta?.endDate ? new Date(userBookMeta.endDate) : '',
               notes: userBookMeta?.notes || '',
               review: userBookMeta?.review || '',
             }}
             onSubmit={({ bookshelf, startDate, endDate, notes, review }) => {
+              // console.log(userBookMeta);
               userBookMeta
                 ? dispatch(
                     updateUserBook(userBookMeta.id, {
-                      startDate,
-                      endDate,
+                      startDate: startDate,
+                      endDate: endDate,
                       notes,
                       review,
                       bookshelfId: parseInt(bookshelf),
@@ -148,34 +154,53 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
                 isValid = false;
                 errorObj.bookshelf = 'Bookshelf should be selected';
               }
+              console.log(isFutureDate(values.startDate));
+              if (values.startDate && isFutureDate(values.startDate)) {
+                isValid = false;
+                errorObj.startDate = 'Start date can not be in the future';
+              }
+              if (values.endDate && isFutureDate(values.endDate)) {
+                isValid = false;
+                errorObj.startDate = 'End date can not be in the future';
+              }
+              if (values.startDate && values.endDate && !isDateBeforeOtherDate(values.startDate, values.endDate)) {
+                isValid = false;
+                errorObj.startDate = 'Start date can not be after end date';
+              }
               if (!isValid) return errorObj;
             }}
           >
-            <Form>
-              <div className='form_field'>
-                <FormikDropdown
-                  name={'bookshelf'}
-                  label={'Choose bookshelf:'}
-                  placeholder={'Select bookshelf'}
-                  options={getBookShelfDropdownOptions()}
-                />
-              </div>
-              <div className='form_field rating'>
-                <label htmlFor='rating'>My rating:</label>
-                <Rating name={'rating'} />
-              </div>
-              <div className='form_field'>
-                <FormikTextarea name={'notes'} placeholder={'What did you think'} rows={4} />
-              </div>
-              <div className='form_field'>
-                <FormikTextarea name={'review'} placeholder={'Enter your review'} rows={12} />
-              </div>
-              <div className='form_field dates'>
-                <FormikDatePicker name={'startDate'} label={'Date started'} />
-                <FormikDatePicker name={'endDate'} label={'Date finished'} />
-              </div>
-              <ColoredButton type={'submit'} className={'submit_btn'} title={'Submit'} />
-            </Form>
+            {({ values }) => (
+              <Form>
+                <div className='form_field'>
+                  <FormikDropdown
+                    name={'bookshelf'}
+                    label={'Choose bookshelf:'}
+                    placeholder={'Select bookshelf'}
+                    options={getBookShelfDropdownOptions()}
+                  />
+                </div>
+                <div className='form_field rating'>
+                  <label htmlFor='rating'>My rating:</label>
+                  <Rating name={'rating'} />
+                </div>
+                <div className='form_field'>
+                  <FormikTextarea name={'notes'} placeholder={'What did you think'} rows={4} />
+                </div>
+                <div className='form_field'>
+                  <FormikTextarea name={'review'} placeholder={'Enter your review'} rows={12} />
+                </div>
+                <div className='form_field dates'>
+                  {parseInt(values.bookshelf) !== 1 && !isNaN(parseInt(values.bookshelf)) && (
+                    <FormikDatePicker name={'startDate'} label={'Date started'} />
+                  )}
+                  {parseInt(values.bookshelf) === 3 && <FormikDatePicker name={'endDate'} label={'Date finished'} />}
+                </div>
+                <div className={'form_controls'}>
+                  <ColoredButton type={'submit'} className={'submit_btn'} title={'Submit'} />
+                </div>
+              </Form>
+            )}
           </Formik>
         </div>
         <CloseButton onClose={setIsOpen} />

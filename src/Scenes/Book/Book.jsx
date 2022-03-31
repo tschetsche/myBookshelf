@@ -119,11 +119,13 @@ const Book = (props) => {
               <span>
                 {book.categories?.map((category, index, array) =>
                   index !== array.lenght ? (
-                    <React.Fragment>
-                      <Link to={'/'}>{category}</Link> &nbsp;
+                    <React.Fragment key={`${params.bookID}${category}`}>
+                      <Link to={`/search?category=${encodeURIComponent(category)}`}>{category}</Link> &nbsp;
                     </React.Fragment>
                   ) : (
-                    <Link to={'/'}>{category}</Link>
+                    <Link to={`/search?category=${encodeURIComponent(category)}`} key={`${params.bookID}${category}`}>
+                      {category}
+                    </Link>
                   )
                 )}
               </span>
