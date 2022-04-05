@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { selectBookshelfList, selectUserBookMetaById } from '../../../store/selectors/bookshelf';
@@ -12,7 +12,8 @@ import Rating from '../../Rating/Rating';
 import CloseButton from '../../CloseButton/CloseButton';
 import { selectUserId } from '../../../store/selectors/user';
 import ColoredButton from '../../ColoredButton/ColoredButton';
-import { isDateBeforeOtherDate, isFutureDate } from '../../../util/dataUtil';
+import { isDateBeforeOtherDate, isFutureDate } from '../../../util/dateUtil';
+import { deepEqual } from '../../../util/objectUtil';
 
 const StyledAddToBookshelfModal = styled.div`
   border-radius: 10px;
@@ -84,6 +85,13 @@ const StyledAddToBookshelfModal = styled.div`
 const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }) => {
   const bookshelfList = useSelector(selectBookshelfList);
   const userBookMeta = useSelector((store) => selectUserBookMetaById(store, bookId));
+  const [initialValues, setInitialValues] = useState({
+    bookshelf: userBookMeta?.bookshelfId || '',
+    startDate: userBookMeta?.startDate ? new Date(userBookMeta.startDate) : '',
+    endDate: userBookMeta?.endDate ? new Date(userBookMeta.endDate) : '',
+    notes: userBookMeta?.notes || '',
+    review: userBookMeta?.review || '',
+  });
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
@@ -107,42 +115,35 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
         </div>
         <div className={'modal_content'}>
           <Formik
-            initialValues={{
-              bookshelf: userBookMeta?.bookshelfId || '',
-              rating: '',
-              startDate: userBookMeta?.startDate ? new Date(userBookMeta.startDate) : '',
-              endDate: userBookMeta?.endDate ? new Date(userBookMeta.endDate) : '',
-              notes: userBookMeta?.notes || '',
-              review: userBookMeta?.review || '',
-            }}
-            onSubmit={({ bookshelf, startDate, endDate, notes, review }) => {
-              userBookMeta
-                ? dispatch(
-                    updateUserBook(userBookMeta.id, {
-                      startDate: startDate,
-                      endDate: endDate,
-                      notes,
-                      review,
-                      bookshelfId: parseInt(bookshelf),
-                      rating,
-                      dateModified: new Date(),
-                    })
-                  )
-                : dispatch(
-                    addBookToBookshelf(userId, {
-                      startDate,
-                      endDate,
-                      notes,
-                      review,
-                      title,
-                      bookId,
-                      bookshelfId: parseInt(bookshelf),
-                      author,
-                      cover,
-                      rating,
-                      dateModified: new Date(),
-                    })
-                  );
+            initialValues={initialValues}
+            onSubmit={(values) => {
+              if (!deepEqual(initialValues, values)) {
+                userBookMeta
+                  ? dispatch(
+                      updateUserBook(userBookMeta.id, {
+                        startDate: values.startDate,
+                        endDate: values.endDate,
+                        notes: values.notes,
+                        review: values.review,
+                        bookshelfId: parseInt(values.bookshelf),
+                        dateModified: new Date(),
+                      })
+                    )
+                  : dispatch(
+                      addBookToBookshelf(userId, {
+                        startDate: values.startDate,
+                        endDate: values.endDate,
+                        notes: values.notes,
+                        review: values.review,
+                        title,
+                        bookId,
+                        bookshelfId: parseInt(values.bookshelf),
+                        author,
+                        cover,
+                        dateModified: new Date(),
+                      })
+                    );
+              }
               setIsOpen(false);
             }}
             validate={(values) => {

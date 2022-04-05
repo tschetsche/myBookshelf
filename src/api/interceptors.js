@@ -12,13 +12,16 @@ const attachStoreToFakeApi = (store) => {
     (response) => {
       return response;
     },
-    (response) => {
-      if (response.code === 401) {
-        store.dispatch(userLogOut());
-      } else {
-        store.dispatch(storeApiError(response.response.data));
-        throw response;
+    (error) => {
+      if (!error.response) {
+        store.dispatch(storeApiError({ message: 'Network error', date: new Date() }));
+        throw error;
       }
+      if (error.response.status === 401) {
+        store.dispatch(userLogOut());
+      }
+      store.dispatch(storeApiError({ message: error.response, date: new Date() }));
+      throw error;
     }
   );
 };

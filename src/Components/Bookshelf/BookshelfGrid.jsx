@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { ModalContext } from 'HOC/GlobalModalProvider';
 import AddToBookshelfModal from '../Modal/AddToBookshelfModal/AddToBookshelfModal';
 import { useEffect } from 'react';
+import ReadMoreTableCell from './ReadMoreTableCell';
 
 const StyledBookshelf = styled.table`
   border-collapse: collapse;
@@ -23,6 +24,8 @@ const StyledBookshelf = styled.table`
   th,
   td {
     padding: 12px 15px;
+    text-align: left;
+    vertical-align: top;
   }
   tbody tr {
     border-bottom: 1px solid #dddddd;
@@ -46,12 +49,16 @@ const StyledBookshelf = styled.table`
       cursor: default;
     }
   }
+  .review_column_sortable,
+  .notes_column_sortable {
+    width: 20%;
+  }
 `;
 
-const BookshelfGrid = ({ books, columns }) => {
+const BookshelfGrid = ({ books, columns, defaultSortKey }) => {
   const [bookList, setBookList] = useState(books);
   const [sortDirection, setSortDirection] = useState(1);
-  const [sortField, setSortField] = useState('');
+  const [sortField, setSortField] = useState(defaultSortKey);
   const openModal = useContext(ModalContext);
 
   useEffect(() => {
@@ -129,6 +136,13 @@ const BookshelfGrid = ({ books, columns }) => {
                         <button onClick={() => toggleModal(book)}>
                           <FiEdit />
                         </button>
+                      </td>
+                    );
+                  case 'notes':
+                  case 'review':
+                    return (
+                      <td key={`${column.dataKey}${book.bookId}`}>
+                        <ReadMoreTableCell cellText={book[column.dataKey]} />
                       </td>
                     );
                   default:

@@ -64,10 +64,10 @@ const MainLayout = (props) => {
   }, []);
 
   useEffect(() => {
-    if (apiError) {
-      toast.error(apiError);
+    if (apiError?.message) {
+      toast.error(apiError.message);
     }
-  }, [apiError]);
+  }, [apiError?.date]);
 
   return (
     <StyledMainLayout>

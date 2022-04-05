@@ -5,7 +5,7 @@ import { BsFillGridFill, BsListUl } from 'react-icons/bs';
 import BookshelfList from './BookshelfList';
 import BookshelfGrid from './BookshelfGrid';
 import styled from 'styled-components';
-import { formatISOString } from '../../util/dataUtil';
+import { formatISOString } from '../../util/dateUtil';
 
 const BOOKSHELF_TABLE_COLUMNS = [
   { name: 'cover', dataKey: 'cover', isSortable: false },
@@ -121,7 +121,11 @@ const Bookshelf = ({ bookshelfId }) => {
         </div>
       </div>
       <div className={'bookshelf_content'}>
-        {isListView ? <BookshelfList books={books} /> : <BookshelfGrid books={formatBookList(books)} columns={BOOKSHELF_TABLE_COLUMNS} />}
+        {isListView ? (
+          <BookshelfList books={books} />
+        ) : (
+          <BookshelfGrid books={formatBookList(books)} columns={BOOKSHELF_TABLE_COLUMNS} defaultSortKey={'dateModified'} />
+        )}
       </div>
     </StyledBookshelf>
   );

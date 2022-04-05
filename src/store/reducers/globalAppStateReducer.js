@@ -2,7 +2,7 @@ import { storeApiError, removeApiError } from '../actions/globalAppActions';
 import { createReducer } from '@reduxjs/toolkit';
 
 const initialState = {
-  APIError: '',
+  APIError: null,
 };
 
 const globalAppStateReducer = createReducer(initialState, (builder) => {
@@ -11,7 +11,7 @@ const globalAppStateReducer = createReducer(initialState, (builder) => {
       state.APIError = action.payload;
     })
     .addCase(removeApiError, (state, action) => {
-      state.APIError = '';
+      state.APIError = null;
     });
 });
 

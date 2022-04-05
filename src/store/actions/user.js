@@ -25,7 +25,7 @@ export const userLogIn = createAsyncThunk('logInUser', async (payload, thunkApi)
       thunkApi.dispatch(removeApiError());
     })
     .catch((response) => {
-      thunkApi.dispatch(storeApiError(response.response.data));
+      thunkApi.dispatch(storeApiError({ message: response.response.data, date: new Date() }));
     });
 });
 
@@ -46,7 +46,7 @@ export const userRegister = createAsyncThunk('registerUser', async (payload, thu
       thunkApi.dispatch(removeApiError());
     })
     .catch((response) => {
-      thunkApi.dispatch(storeApiError(response.response.data));
+      thunkApi.dispatch(storeApiError({ message: response.response.data, date: new Date() }));
     });
 });
 
@@ -60,7 +60,7 @@ export const userLogOut = () => {
 export const changeUserEmail = createAsyncThunk('changeUserEmail', async (payload, thunkApi) => {
   fakeApi.get(`users?email=${payload.email}`).then((response) => {
     if (response.data.length !== 0) {
-      thunkApi.dispatch(storeApiError(`Specified email ${payload.email} is already in use`));
+      thunkApi.dispatch(storeApiError({ message: `Specified email ${payload.email} is already in use`, date: new Date() }));
     } else {
       fakeApi.patch(`/users/${payload.id}`, { email: payload.email }).then((response) => {
         thunkApi.dispatch(updateUserEmail(payload.email));
