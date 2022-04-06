@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, createSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import fakeApi from '../../api/fakeApi';
 import Card from '../../Components/Card/Card';
@@ -32,31 +32,34 @@ const Search = (props) => {
 
   const searchString = searchParams.get('book');
 
-  const formatParams = (params) => {
-    const pars = Object.fromEntries([...searchParams]);
-    const parsFormatted = {};
-    if ('book' in pars) {
-      parsFormatted['title_like'] = params.book;
+  const formatParams = () => {
+    const pars = new Map();
+    if (searchParams.has('book')) {
+      pars.set('title_like', searchParams.get('book'));
     }
-    if ('category' in pars) {
-      parsFormatted['categories_like'] = params.category;
+    if (searchParams.has('category')) {
+      pars.set('categories_like', searchParams.getAll('category'));
     }
-    if ('rating' in pars) {
-      parsFormatted['rating_gte'] = parseFloat(params.rating);
-      parsFormatted['rating_lte'] = parseFloat(params.rating) + 0.9;
+    if (searchParams.has('rating')) {
+      const selectedRating = searchParams.getAll('rating');
+      pars.set(
+        'rating_gte',
+        selectedRating.map((el) => parseFloat(el))
+      );
+      pars.set(
+        'rating_lte',
+        selectedRating.map((el) => parseFloat(el) + 0.9)
+      );
     }
-    if ('author' in pars) {
-      parsFormatted['author_like'] = pars.author;
+    if (searchParams.has('author')) {
+      pars.set('author_like', searchParams.getAll('author'));
     }
-    return Object.keys(parsFormatted)
-      .map((key) => key + '=' + parsFormatted[key])
-      .join('&');
+    return Object.fromEntries(pars);
   };
 
   useEffect(() => {
-    const pars = Object.fromEntries([...searchParams]);
-    const parsFormatted = formatParams(pars);
-    fakeApi.get(`book?${parsFormatted}`).then((response) => {
+    const parsFormatted = createSearchParams(formatParams());
+    fakeApi.get(`book?${parsFormatted.toString()}`).then((response) => {
       dispatch(updateSearchResults(response.data));
     });
   }, [searchParams]);

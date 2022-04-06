@@ -33,7 +33,6 @@ const ChangePasswordForm = ({ handleClose, userId }) => {
             errorObj.profile_new_pwd = 'Password should be at least 6 characters';
           }
           if (values.profile_new_pwd !== values.profile_new_pwd_confirm) {
-            console.log();
             isValid = false;
             errorObj.profile_new_pwd_confirm = 'Passwords must be the same';
           }

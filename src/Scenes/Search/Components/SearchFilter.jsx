@@ -1,4 +1,3 @@
-import { Form, Formik } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 import FilterSection from './FilterSection';
@@ -19,24 +18,17 @@ const SearchFilter = ({ searchData }) => {
     const filtered = [];
     data.forEach((el) => el['rating'] && filtered.push(parseInt(el['rating'])));
     const setFilter = new Set(filtered);
-    return Array.from(setFilter);
+    return Array.from(setFilter).sort();
   };
 
   return (
     <StyledSearchFilter>
       <div className={'filter_content'}>
-        <Formik
-          initialValues={{ category: '', author: '', rating: '' }}
-          handleChange={(values) => {
-            console.log(values);
-          }}
-        >
-          <Form>
-            <FilterSection subtitle={'Category'} data={filterDataByCategory(searchData, 'categories')} />
-            <FilterSection subtitle={'Author'} data={filterDataByCategory(searchData, 'author')} />
-            <FilterSection subtitle={'Rating'} data={filterRating(searchData)} />
-          </Form>
-        </Formik>
+        <form>
+          <FilterSection subtitle={'Category'} data={filterDataByCategory(searchData, 'categories')} />
+          <FilterSection subtitle={'Author'} data={filterDataByCategory(searchData, 'author')} />
+          <FilterSection subtitle={'Rating'} data={filterRating(searchData)} />
+        </form>
       </div>
     </StyledSearchFilter>
   );

@@ -39,7 +39,7 @@ const StyledFilterCheckbox = styled.div`
   }
 `;
 
-const FilterCheckbox = ({ label, handleSectionFilter, checked, ...props }) => {
+const FilterCheckbox = ({ label, handleSectionFilter, ...props }) => {
   return (
     <StyledFilterCheckbox>
       <div className={'checkbox_block'}>
@@ -50,7 +50,6 @@ const FilterCheckbox = ({ label, handleSectionFilter, checked, ...props }) => {
           onChange={(e) => {
             handleSectionFilter(props.name, props.value, e.target.checked);
           }}
-          defaultChecked={checked}
         ></input>
         <label className={'filter_option__label'}>
           <span className={'option_label__text'}>{label}</span>

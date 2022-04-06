@@ -46,7 +46,7 @@ const StyledFilterSection = styled.div`
 `;
 
 const FilterSection = ({ subtitle, data }) => {
-  const [appliedParams, setAppliedParams] = useState([]);
+  const [appliedParams, setAppliedParams] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const appendSearchParams = (obj) => {
@@ -54,7 +54,7 @@ const FilterSection = ({ subtitle, data }) => {
     Object.entries(obj).forEach(([key, value]) => {
       if (Array.isArray(value)) {
         sp.delete(key);
-        value.forEach((v) => sp.append(key, v));
+        value.forEach((v) => v && sp.append(key, v));
       } else if (value === undefined) {
         sp.delete(key);
       } else {
@@ -65,15 +65,10 @@ const FilterSection = ({ subtitle, data }) => {
   };
 
   useEffect(() => {
-    const appliedFilterCategory = searchParams.get(subtitle.toLowerCase());
-    console.log(appliedFilterCategory);
-    if (appliedFilterCategory) {
-      setAppliedParams([...appliedParams, appliedFilterCategory]);
-    }
+    setAppliedParams(searchParams.getAll(subtitle.toLowerCase()));
   }, []);
 
   const handleFilterCategorySelect = (name, value, checked) => {
-    console.log(checked);
     const newPars = checked ? [...appliedParams, value] : appliedParams.filter((e) => e !== value);
     setSearchParams(appendSearchParams({ [name]: newPars }));
     setAppliedParams(newPars);
@@ -91,7 +86,7 @@ const FilterSection = ({ subtitle, data }) => {
                 name={String(subtitle).toLowerCase()}
                 value={String(el).toLowerCase()}
                 handleSectionFilter={handleFilterCategorySelect}
-                checked={appliedParams.includes(el)}
+                defaultChecked={searchParams.getAll(subtitle.toLowerCase()).includes(String(el).toLowerCase())}
               />
             </li>
           ))}

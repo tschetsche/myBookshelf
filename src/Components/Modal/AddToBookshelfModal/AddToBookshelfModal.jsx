@@ -153,7 +153,6 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
                 isValid = false;
                 errorObj.bookshelf = 'Bookshelf should be selected';
               }
-              console.log(isFutureDate(values.startDate));
               if (values.startDate && isFutureDate(values.startDate)) {
                 isValid = false;
                 errorObj.startDate = 'Start date can not be in the future';

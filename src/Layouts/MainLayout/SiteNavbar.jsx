@@ -32,7 +32,6 @@ const SiteNavbar = (props) => {
 
   const handleClickBasedOnUserState = () => {
     if (isLoggedIn) {
-      console.log('Im here');
       navigate('/lib');
     } else {
       openModal(<LoginModal onClose={openModal} />);

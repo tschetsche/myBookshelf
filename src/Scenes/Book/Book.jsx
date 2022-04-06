@@ -120,10 +120,10 @@ const Book = (props) => {
                 {book.categories?.map((category, index, array) =>
                   index !== array.lenght ? (
                     <React.Fragment key={`${params.bookID}${category}`}>
-                      <Link to={`/search?category=${encodeURIComponent(category)}`}>{category}</Link> &nbsp;
+                      <Link to={`/search?category=${encodeURIComponent(category.toLowerCase())}`}>{category}</Link> &nbsp;
                     </React.Fragment>
                   ) : (
-                    <Link to={`/search?category=${encodeURIComponent(category)}`} key={`${params.bookID}${category}`}>
+                    <Link to={`/search?category=${encodeURIComponent(category.toLowerCase())}`} key={`${params.bookID}${category}`}>
                       {category}
                     </Link>
                   )
