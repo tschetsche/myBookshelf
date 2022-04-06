@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import ThemeSwitchToggle from 'Components/ThemeSwitchToggle/ThemeSwitchToggle';
-import { AiOutlineUser, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineUser } from 'react-icons/ai';
 import { ModalContext } from '../../HOC/GlobalModalProvider';
 import LoginModal from '../../Components/Modal/LoginModal/LoginModal';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { userIsLoggedInSelector } from '../../store/selectors/user';
 import { useDispatch } from 'react-redux';
 import { userLogOut } from '../../store/actions/user';
+import SearchBar from './SearchBar';
 
 const StyledUserNavbar = styled.nav`
   display: flex;
@@ -92,6 +93,9 @@ const UserNavbar = (props) => {
 
   return (
     <StyledUserNavbar displayProfileMenu={isProfileCollapsed}>
+      <div className={'user_navbar_item'}>
+        <SearchBar />
+      </div>
       {isLoggedIn ? (
         <div
           className={'user_navbar_item'}
