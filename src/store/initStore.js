@@ -17,6 +17,7 @@ const composedEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['globalAppState'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
