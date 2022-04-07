@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaStar } from 'react-icons/fa';
+import { useField } from 'formik';
 
 const StyledRating = styled.div`
   button {
@@ -18,20 +19,26 @@ const StyledRating = styled.div`
 `;
 
 const Rating = ({ name }) => {
-  const [rating, setRating] = useState(0);
+  const [field, meta, helpers] = useField(name);
   const [hover, setHover] = useState(0);
+
+  const { setValue } = helpers;
+  const { value } = meta;
+
   return (
-    <StyledRating name={name} id={name}>
+    <StyledRating>
       {[...Array(5)].map((star, index) => {
         index += 1;
         return (
           <button
             type='button'
             key={index}
-            className={index <= (hover || rating) ? 'on' : 'off'}
-            onClick={() => setRating(index)}
+            className={index <= (hover || value) ? 'on' : 'off'}
+            onClick={() => {
+              setValue(index);
+            }}
             onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
+            onMouseLeave={() => setHover(value)}
           >
             <FaStar className='star' />
           </button>

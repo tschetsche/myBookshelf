@@ -3,7 +3,6 @@ import { useField, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { DateTime } from 'luxon';
 
 const StyledFormikDatePicker = styled.div`
   font-family: 'montserrat';

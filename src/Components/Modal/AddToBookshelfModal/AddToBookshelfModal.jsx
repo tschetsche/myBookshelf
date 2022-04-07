@@ -91,6 +91,7 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
     endDate: userBookMeta?.endDate ? new Date(userBookMeta.endDate) : '',
     notes: userBookMeta?.notes || '',
     review: userBookMeta?.review || '',
+    rating: userBookMeta?.rating || 0,
   });
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
@@ -127,6 +128,7 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
                         review: values.review,
                         bookshelfId: parseInt(values.bookshelf),
                         dateModified: new Date(),
+                        rating: values.rating,
                       })
                     )
                   : dispatch(
@@ -141,6 +143,7 @@ const AddToBookshelfModal = ({ title, setIsOpen, bookId, author, cover, rating }
                         author,
                         cover,
                         dateModified: new Date(),
+                        rating: values.rating,
                       })
                     );
               }

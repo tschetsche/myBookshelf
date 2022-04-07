@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import fakeApi from '../../api/fakeApi';
 import AddToBookshelfModal from '../../Components/Modal/AddToBookshelfModal/AddToBookshelfModal';
 import { ModalContext } from 'HOC/GlobalModalProvider';
-import Rating from '../../Components/Rating/Rating';
 import ColoredButton from '../../Components/ColoredButton/ColoredButton';
 import { useSelector } from 'react-redux';
 import { userIsLoggedInSelector } from '../../store/selectors/user';
@@ -137,7 +136,6 @@ const Book = (props) => {
             <div className={'rating detail-row'}>
               <label>Rating:</label>
               <span>{book.rating}</span>
-              <Rating name={'rating'} />
             </div>
             <div className={'description'}>
               <h3>Description</h3>

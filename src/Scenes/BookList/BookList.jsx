@@ -30,7 +30,7 @@ const BookList = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fakeApi.get('/books').then((response) => {
+    fakeApi.get('/book').then((response) => {
       dispatch(replaceBookList(response.data));
     });
   }, []);
