@@ -44,6 +44,7 @@ const StyledMainLayout = styled.div`
   .content {
     width: 100%;
     min-height: calc(100vh - 100px);
+    position: relative;
   }
 
   .content::after {
