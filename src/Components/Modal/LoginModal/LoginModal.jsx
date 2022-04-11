@@ -20,6 +20,10 @@ const StyledLoginModal = styled.div`
   transform: translate(-50%, -50%);
   z-index: 1000;
   height: 30em;
+
+  .form_row {
+    margin-bottom: 20px;
+  }
 `;
 
 const LoginModal = ({ onClose }) => {
@@ -66,9 +70,13 @@ const LoginModal = ({ onClose }) => {
               <Form>
                 <h5 className={'modal_title'}>Sign in</h5>
                 <h6 className={'modal_desc'}>Welcome Back!</h6>
-                <FormikInput name='email' type='email' placeholder='Email' id='email'></FormikInput>
-                <FormikInput name='password' type='password' placeholder='Password' id='password'></FormikInput>
-                <ColoredButton type={'submit'} className={'submit_btn'} title={'Login'} fullWidth={true}></ColoredButton>
+                <div className={'form_row'}>
+                  <FormikInput name='email' type='email' placeholder='Email' id='email' />
+                </div>
+                <div className={'form_row'}>
+                  <FormikInput name='password' type='password' placeholder='Password' id='password' />
+                </div>
+                <ColoredButton type={'submit'} className={'submit_btn'} title={'Login'} fullWidth={true} />
                 <div className={'register_block'}>
                   Don't have an account?
                   <button
@@ -101,9 +109,13 @@ const LoginModal = ({ onClose }) => {
               <Form>
                 <h5 className={'modal_title'}>Create account</h5>
                 <h6 className={'modal_desc'}>Join us</h6>
-                <FormikInput name='email' type='email' placeholder='Email' id='email'></FormikInput>
-                <FormikInput name='password' type='password' placeholder='Password' id='password'></FormikInput>
-                <ColoredButton type={'submit'} className={'submit_btn'} title={'Sign up'} fullWidth={true}></ColoredButton>
+                <div className={'form_row'}>
+                  <FormikInput name='email' type='email' placeholder='Email' id='email' />
+                </div>
+                <div className={'form_row'}>
+                  <FormikInput name='password' type='password' placeholder='Password' id='password' />
+                </div>
+                <ColoredButton type={'submit'} className={'submit_btn'} title={'Sign up'} fullWidth={true} />
                 <div className={'login_block'}>
                   Already have an account?
                   <button

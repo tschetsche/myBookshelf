@@ -1,18 +1,22 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import styled from 'styled-components';
-import ColoredButton from '../../Components/ColoredButton/ColoredButton';
-import FormikInput from '../../Components/Formik/FormikInput';
-import CloseButton from '../../Components/CloseButton/CloseButton';
+import ColoredButton from 'Components/ColoredButton/ColoredButton';
+import FormikInput from 'Components/Formik/FormikInput';
+import CloseButton from 'Components/CloseButton/CloseButton';
 import { useDispatch } from 'react-redux';
-import { changeUserPassword } from '../../store/actions/user';
+import { changeUserPassword } from 'store/actions/user';
 
 const StyledChangePasswordForm = styled.div`
   margin: 36px 8px 18px 8px;
+  .profile_row {
+    margin-bottom: 20px;
+  }
 `;
 
 const ChangePasswordForm = ({ handleClose, userId }) => {
   const dispatch = useDispatch();
+
   return (
     <StyledChangePasswordForm>
       <Formik
@@ -24,6 +28,10 @@ const ChangePasswordForm = ({ handleClose, userId }) => {
         validate={(values) => {
           const errorObj = {};
           let isValid = true;
+          if (values.profile_old_pwd === '') {
+            isValid = false;
+            errorObj.profile_old_pwd = 'Current password should be provided';
+          }
           if (values.profile_old_pwd === values.profile_new_pwd) {
             isValid = false;
             errorObj.profile_new_pwd = 'Password is not new';
@@ -35,6 +43,10 @@ const ChangePasswordForm = ({ handleClose, userId }) => {
           if (values.profile_new_pwd !== values.profile_new_pwd_confirm) {
             isValid = false;
             errorObj.profile_new_pwd_confirm = 'Passwords must be the same';
+          }
+          if (values.profile_new_pwd_confirm === '') {
+            isValid = false;
+            errorObj.profile_new_pwd_confirm = 'New password should be confirmed';
           }
           if (!isValid) return errorObj;
         }}
@@ -54,7 +66,6 @@ const ChangePasswordForm = ({ handleClose, userId }) => {
             <div className={'profile_labeled'}>
               <FormikInput name='profile_new_pwd' type='password' id='profile_new_pwd'></FormikInput>
             </div>
-            <div class='settings_tt_place fl_l' id='profile_pwd_tt_place'></div>
           </div>
           <div className={'profile_row'}>
             <div className={'profile_label'}>Confirm New Password</div>

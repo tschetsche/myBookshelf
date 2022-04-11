@@ -1,14 +1,13 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import styled from 'styled-components';
-import ColoredButton from '../../Components/ColoredButton/ColoredButton';
-import FormikInput from '../../Components/Formik/FormikInput';
-import { validateEmail } from '../../util/emailUtil';
-import CloseButton from '../../Components/CloseButton/CloseButton';
-import { useDispatch } from 'react-redux';
-import { selectUserName } from '../../store/selectors/user';
-import { useSelector } from 'react-redux';
-import { changeUserEmail } from '../../store/actions/user';
+import ColoredButton from 'Components/ColoredButton/ColoredButton';
+import FormikInput from 'Components/Formik/FormikInput';
+import { validateEmail } from 'util/emailUtil';
+import CloseButton from 'Components/CloseButton/CloseButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserName } from 'store/selectors/user';
+import { changeUserEmail } from 'store/actions/user';
 
 const StyledChangeEmailForm = styled.div`
   margin: 36px 8px 18px 8px;
@@ -34,7 +33,11 @@ const ChangeEmailForm = ({ handleClose, userId }) => {
           }
           if (!validateEmail(values.email)) {
             isValid = false;
-            errorObj.profile_new_pwd = 'Email is not valid';
+            errorObj.email = 'Email is not valid';
+          }
+          if (values.email === '') {
+            isValid = false;
+            errorObj.email = 'Email can not be empty';
           }
           if (!isValid) return errorObj;
         }}

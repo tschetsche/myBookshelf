@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "email": "test3@email.com",
+      "email": "test@email.com",
       "password": "$2a$10$PTHD/QmMLDbgGXcNsXrA.encON6Q5x0TdESUQsYxRSNYzGTYm439u",
       "id": 1
     },

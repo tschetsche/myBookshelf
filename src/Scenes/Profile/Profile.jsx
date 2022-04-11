@@ -1,11 +1,10 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { selectUserId, selectUserName } from '../../store/selectors/user';
-import ChangeEmailForm from './ChangeEmailForm';
-import ChangePasswordForm from './ChangePasswordForm';
+import { selectUserId, selectUserName } from 'store/selectors/user';
+import ChangeEmailForm from './Components/ChangeEmailForm';
+import ChangePasswordForm from './Components/ChangePasswordForm';
 
 const StyledProfile = styled.div`
   width: 980px;
@@ -23,7 +22,6 @@ const StyledProfile = styled.div`
   }
 
   .profile_label {
-    align-self: start;
     width: 200px;
   }
 
@@ -37,6 +35,7 @@ const StyledProfile = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
+
   .profile_row {
     display: flex;
     flex-direction: row;

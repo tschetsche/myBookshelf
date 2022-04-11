@@ -6,7 +6,6 @@ const StyledFormikInput = styled.div`
   font-family: 'montserrat';
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
   position: relative;
 
   .input_block {
