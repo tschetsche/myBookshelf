@@ -93,8 +93,6 @@ const Pagination = (props) => {
     onPageChange(currentPage - 1);
   };
 
-  console.log(currentPage);
-
   let lastPage = paginationRange[paginationRange.length - 1];
   return (
     <StyledPagination>

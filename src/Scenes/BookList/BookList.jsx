@@ -12,7 +12,7 @@ const StyledBookList = styled.div`
   flex-direction: column;
   align-content: space-between;
   padding: 20px;
-  margin: 0px 20px;
+  margin: 0px 120px;
 
   .pagination_wrapper {
     align-self: center;

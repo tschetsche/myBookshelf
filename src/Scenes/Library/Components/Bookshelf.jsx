@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectBookshelfById } from '../../store/selectors/bookshelf';
+import { selectBookshelfById } from '../../../store/selectors/bookshelf';
 import { BsFillGridFill, BsListUl } from 'react-icons/bs';
 import BookshelfList from './BookshelfList';
 import BookshelfGrid from './BookshelfGrid';
 import styled from 'styled-components';
-import { formatISOString } from '../../util/dateUtil';
+import { formatISOString } from '../../../util/dateUtil';
 
 const BOOKSHELF_TABLE_COLUMNS = [
   { name: 'cover', dataKey: 'cover', isSortable: false },
@@ -49,11 +49,6 @@ const BOOKSHELF_TABLE_COLUMNS = [
 ];
 
 const StyledBookshelf = styled.div`
-  width: 980px;
-  position: relative;
-  margin: 0 auto;
-  height: auto;
-  box-sizing: border-box;
   .bookshelf_view {
     display: flex;
     justify-content: flex-end;
@@ -77,6 +72,11 @@ const StyledBookshelf = styled.div`
     }
   }
 `;
+const StyledNoBooksFoundLabel = styled.div`
+  display: flex;
+  justify-content: center;
+  font-family: 'sourceSansPro';
+`;
 
 const Bookshelf = ({ bookshelfId }) => {
   const [isListView, setIsListView] = useState(true);
@@ -84,7 +84,11 @@ const Bookshelf = ({ bookshelfId }) => {
   const books = useSelector((store) => selectBookshelfById(store, bookshelfId));
 
   if (!books) {
-    return <div>No books found for this bookshelf</div>;
+    return (
+      <StyledNoBooksFoundLabel>
+        <div>No books found for this bookshelf</div>
+      </StyledNoBooksFoundLabel>
+    );
   }
 
   const formatBookList = (bookList) => {

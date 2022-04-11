@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import Card from '../Card/Card';
+import Card from 'Components/Card/Card';
 
 const StyledBookshelfList = styled.div`
   display: flex;
-  flex-wrap: row;
+  flex-shrink: 0;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 `;
+
 const BookshelfList = ({ books }) => {
   return (
     <StyledBookshelfList>

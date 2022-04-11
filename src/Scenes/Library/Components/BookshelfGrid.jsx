@@ -4,11 +4,14 @@ import styled from 'styled-components';
 import { FiEdit } from 'react-icons/fi';
 import { useContext } from 'react';
 import { ModalContext } from 'HOC/GlobalModalProvider';
-import AddToBookshelfModal from '../Modal/AddToBookshelfModal/AddToBookshelfModal';
+import AddToBookshelfModal from '../../../Components/Modal/AddToBookshelfModal/AddToBookshelfModal';
 import { useEffect } from 'react';
 import ReadMoreTableCell from './ReadMoreTableCell';
+import def from 'assets/images/default.png';
+import up from 'assets/images/up_arrow.png';
+import down from 'assets/images/down_arrow.png';
 
-const StyledBookshelf = styled.table`
+const StyledBookshelfGrid = styled.table`
   border-collapse: collapse;
   border-spacing: 2px;
   margin: 25px 0;
@@ -20,16 +23,26 @@ const StyledBookshelf = styled.table`
     vertical-align: bottom;
     padding: 12px 5px 5px 0;
     border-bottom: 1px solid #dddddd;
+    th {
+      vertical-align: middle;
+      padding: 12px 25px 12px 15px;
+      white-space: nowrap;
+    }
   }
+
   th,
   td {
-    padding: 12px 15px;
     text-align: left;
-    vertical-align: top;
   }
+
   tbody tr {
     border-bottom: 1px solid #dddddd;
+    td {
+      vertical-align: top;
+      padding: 12px 15px;
+    }
   }
+
   .book_cover {
     img {
       zoom: 0.5;
@@ -52,6 +65,26 @@ const StyledBookshelf = styled.table`
   .review_column_sortable,
   .notes_column_sortable {
     width: 20%;
+  }
+
+  .default,
+  .up,
+  .down {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center right;
+  }
+
+  .default {
+    background-image: url(${def});
+  }
+
+  .up {
+    background-image: url(${up});
+  }
+
+  .down {
+    background-image: url(${down});
   }
 `;
 
@@ -99,8 +132,16 @@ const BookshelfGrid = ({ books, columns, defaultSortKey }) => {
     );
   };
 
+  const getHeaderClassName = (name, fieldKey) => {
+    const baseClassName = `${name}_column_sortable`;
+    if (fieldKey !== sortField) {
+      return `${baseClassName} default`;
+    }
+    return sortDirection > 0 ? `${baseClassName} up` : `${baseClassName} down`;
+  };
+
   return (
-    <StyledBookshelf>
+    <StyledBookshelfGrid>
       <thead>
         <tr>
           {columns.map((column) => {
@@ -108,7 +149,7 @@ const BookshelfGrid = ({ books, columns, defaultSortKey }) => {
               <th
                 key={column.name}
                 onClick={column.isSortable ? handleGridSort(column.dataKey) : undefined}
-                className={column.isSortable ? `${column.name}_column_sortable` : `${column.name}_column`}
+                className={column.isSortable ? getHeaderClassName(column.name, column.dataKey) : `${column.name}_column`}
               >
                 {column.name}
               </th>
@@ -153,7 +194,7 @@ const BookshelfGrid = ({ books, columns, defaultSortKey }) => {
           );
         })}
       </tbody>
-    </StyledBookshelf>
+    </StyledBookshelfGrid>
   );
 };
 export default BookshelfGrid;

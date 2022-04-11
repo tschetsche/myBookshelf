@@ -53,7 +53,7 @@ const SearchBar = (props) => {
 
   return (
     <StyledSearchBar>
-      <div class='container'>
+      <div className='container'>
         <input placeholder='Search book...' type='text' onKeyDown={handleKeyDown}></input>
         <i>
           <AiOutlineSearch className={'search_icon'} />

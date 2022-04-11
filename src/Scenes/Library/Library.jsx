@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Tabs from '../../Components/Tabs/Tabs';
-import Bookshelf from '../../Components/Bookshelf/Bookshelf';
+import Bookshelf from './Components/Bookshelf';
 import { fetchUserLibrary } from '../../store/actions/bookshelf';
 import { selectUserId } from '../../store/selectors/user';
 import { selectBookshelfList } from '../../store/selectors/bookshelf';
